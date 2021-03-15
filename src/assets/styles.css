@@ -1,0 +1,558 @@
+@import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
+@import url('https://use.fontawesome.com/releases/v5.15.2/css/all.css');
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: Helvetica, sans-serif;
+}
+
+body {
+    margin: 0;
+    background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./writing-background.jpeg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 100vh;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+    min-height: 100vh;
+    padding-bottom: 70px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Helvetica, sans-serif;
+}
+
+.header {
+    display: flex;
+    background: rgba(41, 41, 41, 0.8);
+    background-blend-mode: exclusion;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-logo {
+    margin: 2px;
+}
+
+.hover:hover {
+    box-shadow: 0px 8px 10px 0px rgb(91 138 118);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.header-logo p {
+    padding: 10px 70px 10px 20px;
+    font-family: 'Sacramento', cursive;
+    font-size: 39px;
+    font-style: italic;
+    color: rgb(138 104 60);
+    font-weight: bold;
+    letter-spacing: -1px;
+    border: 1px solid rgb(91 138 118);
+    border-right-width: 5px;
+    border-top-right-radius: 10px;
+    margin: 0;
+    position: relative;
+}
+
+.header-logo p i {
+    color: rgb(91 138 118);
+}
+
+.header-logo p span {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: rgb(132 132 132);
+    position: absolute;
+    top: 55px;
+    left: 95px;
+}
+
+.header-profile a {
+    color: rgb(132 132 132);
+    font-style: italic;
+    font-size: 18px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.header-profile a img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.header-list {
+    display: flex;
+}
+
+.header-list li {
+    list-style: none;
+    padding: 0 30px;
+}
+
+.header-list li a {
+    text-decoration: none;
+    color: rgb(138 104 60);
+    font-weight: bold;
+    font-style: italic;
+    padding: 3px;
+}
+
+/* --------------------header------------------- */
+
+.login {
+    margin: 8rem auto;
+    border: 1px solid rgb(91 138 118);
+    border-top-right-radius: 12px;
+    border-right-width: 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 30px;
+    position: relative;
+}
+
+.login h1 {
+    position: absolute;
+    top: -44px;
+    left: 0;
+    color: rgb(138 104 60);
+    font-style: italic;
+    font-weight: 100;
+}
+
+.login form {
+    align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+}
+
+.login form label {
+    color: rgb(132 132 132);
+    font-weight: bold;
+    margin: 10px;
+}
+
+.login form label input {
+    background: rgba(255, 255, 255, 0.5);
+    height: 30px;
+    font-size: 18px;
+}
+
+.login form button {
+    margin: 10px 10px 0 0;
+    background: rgba(255, 140, 0, 0.5);
+    padding: 6px 24px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.login-question {
+    color: rgb(132 132 132);
+    font-style: italic;
+    font-size: 13px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 2px;
+}
+
+.login-question a {
+    color: rgba(255, 140, 0, 0.5);
+    font-weight: bold;
+}
+
+.error {
+    border: 2px solid red;
+}
+
+.err-msg-wrapper {
+    align-self: center;
+    color: rgb(255, 2, 2);
+    display: flex;
+    align-items: baseline;
+    background-color: rgba(0, 0, 0, 0.7);
+
+}
+
+.err-msg-wrapper i {
+    color: rgb(255, 140, 0);
+    margin-right: 10px;
+}
+
+.err-msg {
+    margin: 5px;
+}
+
+/* --------------------form------------------- */
+
+/* --------------------stories------------------- */
+
+
+.stories {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    overflow: auto;
+}
+
+.stories h1 {
+    color: white;
+    flex-basis: 100%;
+    text-align: center;
+    color: rgb(138 104 60);
+    font-size: 40px;
+    display: inline;
+    border-bottom: 1px solid rgb(91 138 118);
+    margin: 5px 0 20px 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.stories-story {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: rgb(132 132 132);
+    display: flex;
+    flex-flow: column;
+    width: 200px;
+    margin: 15px;
+    text-decoration: none;
+}
+
+
+.stories-story-info {
+    display: flex;
+    flex-wrap: wrap;
+    width: 200px;
+    justify-content: center;
+    padding: 12px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.stories-story-info h3
+ {
+    margin: 0;
+}
+
+.stories-story-info-author {
+    margin: 3px 0 20px 0;
+
+}
+
+.stories-story-footer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.stories-story-footer p {
+    margin: 0;
+}
+
+.stories-story-footer-likes-wrapper {
+    display: flex;
+}
+
+.stories-story-footer-likes-wrapper i {
+    color: rgb(138 104 60);
+}
+
+/* --------------------stories------------------- */
+
+/* --------------------storie details------------------- */
+
+.story-details {
+    width: 95%;
+    margin: 20px auto;
+}
+
+.story-details-header {
+    display: flex;
+    justify-content: space-between;
+    color: rgb(132 132 132);
+    padding: 0 20px;
+    border-bottom: 1px solid rgb(91 138 118);
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.story-details-header h1 {
+    max-width: 400px;
+    font-size: 30px;
+    margin: 0;
+    overflow-wrap: break-word;
+}
+
+.story-details-header-likes {
+    display: flex;
+    align-items: baseline;
+}
+
+.story-details-content {
+    display: flex;
+    height: 400px;
+}
+
+
+
+.story-details-content textarea {
+    flex-grow: 1;
+    font-size: 18px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: rgb(132 132 132);
+    border: none;
+}
+
+.story-details-contributers {
+    color: rgb(132 132 132);
+    border-top: 1px solid rgb(91 138 118);
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.el-table,
+.el-table tr,
+.el-table td,
+.el-table thead th {
+    background-color: rgba(0, 0, 0, 0.8);
+    font-weight: bold;
+}
+
+.story-details-contributers h3 {
+    text-align: center;
+    color: rgb(138 104 60);
+}
+
+
+.story-details-proposals {
+    margin-top: 20px;
+
+}
+
+.story-details-proposals .el-table td {
+    padding: 0px;
+} 
+
+.story-details-proposals h2 {
+    color: rgb(132 132 132);
+    font-size: 36px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    margin: 0;
+}
+
+.table-likes {
+    display: flex;
+    align-items: baseline;
+}
+
+.proposials-table-textarea {
+    width: 100%;
+    height: 200px;
+}
+
+
+
+
+/* --------------------storie details------------------- */
+
+
+/* ------------------about------------------ */
+
+.about {
+    background: rgba(41, 41, 41, 0.8);
+    margin: 80px auto;
+    text-align: center;
+    color: rgb(132 132 132);
+    width: 80%;
+    border: 2px solid rgb(91 138 118);
+    border-right: 10px solid rgb(91 138 118);
+    border-top-right-radius: 20px;
+    padding: 50px;
+}
+
+.about-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    font-size: 50px;
+}
+
+.about-heading h1 {
+    font-family: 'Sacramento', cursive;
+    color: rgb(138 104 60);
+    margin: 0;
+}
+
+.about-heading i {
+    margin-left: 10px;
+    color: rgb(91 138 118);
+}
+
+
+
+/* ------------------about------------------ */
+
+/* ------------------profile------------------ */
+
+
+.profile {
+    margin: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    height: 500px;
+
+}
+
+.profile-img-name {
+    max-width: 200px;
+}
+
+.profile-img-name img {
+    width: 100%;
+    border-radius: 30%;
+}
+
+.profile-img-name p {
+    color: rgb(91 138 118);
+    margin: 0;
+    font-size: 26px;
+    text-align: center;
+}
+
+.profile-inspirations {
+    flex-basis: 30%;
+    margin-left: 50px;
+}
+
+.profile-inspirations h2 {
+    color: rgb(132 132 132);
+}
+
+.carousel-image {
+    object-fit:cover;
+    height: 100%;
+}
+
+.profile-stories {
+    flex-basis: 30%;
+    margin-left: 50px;
+}
+
+.profile-stories h2 {
+    color: rgb(132 132 132);
+}
+
+.profile-stories ul {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.my-story-item {
+    display: flex;
+    flex-flow: column;
+    width: 100px;
+}
+
+.my-story-item h5 {
+    color: rgb(132 132 132);
+    margin: 0;
+}
+
+.profile-purposes {
+    flex-basis: 30%;
+    height: 100%;
+}
+
+.profile-purposes h2 {
+    color: rgb(132 132 132);
+    
+}
+
+.profile-purposes ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    overflow: auto;
+}
+
+.profile-purposes ul li {
+    padding: 10px 0;
+}
+
+.profile-purposes ul li a {
+    text-decoration: none;
+    color: rgb(132 132 132);
+    font-weight: bold;
+}
+
+.profile-purposes-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.profile-purposes-item img {
+    width: 50px;
+} 
+
+.profile-purposes-item p {
+    margin-left: 10px;
+}
+
+/* ------------------profile------------------ */
+
+
+/* ------------------footer------------------ */
+
+
+.footer {
+    text-align: center;
+    background: rgba(37, 37, 37, 0.9);
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.footer p {
+    color: rgb(138 104 60);
+    font-style: italic;
+    margin: 5px;
+}
+
+/* ------------------footer------------------ */
+
+/* -------------------error page-------------------- */
+
+.err-page {
+    color:rgb(132 132 132);
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 50px;
+    border-radius: 10px;
+}
+
+.err-page h1 {
+    font-size: 40px;
+}
+
+.err-page i {
+    font-size: 80px;
+}
