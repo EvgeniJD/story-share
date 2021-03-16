@@ -6,6 +6,9 @@ import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/en'
 import router from './router';
 import {auth} from './firebase';
+import Vue2Editor from "vue2-editor";
+
+Vue.use(Vue2Editor);
 
 Vue.use(Vuelidate)
 
