@@ -168,7 +168,7 @@ export default {
       //   });
 
       const user = firebase.auth().currentUser;
-      console.log("USER: ", user.photoURL, user.displayName, user.uid, user.email);
+      console.log("USER: ",user);
 
       // user
       //   .updateProfile({

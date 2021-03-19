@@ -26,6 +26,10 @@ body {
     padding-bottom: 70px;
 }
 
+#app a {
+    text-decoration: none;
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-family: Helvetica, sans-serif;
 }
@@ -76,16 +80,15 @@ h1, h2, h3, h4, h5, h6 {
     left: 95px;
 }
 
-.header-profile a {
+.header-profile {
     color: rgb(132 132 132);
     font-style: italic;
     font-size: 18px;
-    text-decoration: none;
     display: flex;
     align-items: center;
 }
 
-.header-profile a img {
+.header-profile img {
     width: 30px;
     height: 30px;
     border-radius: 50%;

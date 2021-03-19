@@ -7,29 +7,30 @@
         <span>Let's make incredible stories together</span>
       </p>
     </router-link>
-    
-    <p v-if="isLoggedIn" class="header-profile hover">
-      <router-link to="/user/12345/profile">
-        <img
-          src="https://ffrf.org/media/k2/items/cache/ed4b166fb36e2c27e16d3f79160bb2ac_XL.jpg"
-          alt=""
-        />
-        Hi, Isaac
+
+      <router-link :to="`/user/profile/${user.id}`" class="header-profile hover" v-if="user">
+        <img v-if="user.avatar" :src="user.avatar" alt="" />
+        <span v-if="user.username">Welcome, {{ user.username }}</span>
+        <span v-else>Welcome, {{ user.email }}</span>
       </router-link>
-    </p>
     <nav>
-      <ul class="header-list" v-if="isLoggedIn">
+      <ul class="header-list" v-if="user">
         <li>
           <router-link to="/stories" class="hover">Stories</router-link>
         </li>
         <li>
-          <router-link to="/stories/create" class="hover">Create Story</router-link>
+          <router-link to="/stories/create" class="hover"
+            >Create Story</router-link
+          >
         </li>
         <li>
-          <a href="" class="hover">Logout</a>
+          <a class="hover" @click.prevent="logout">Logout</a>
         </li>
       </ul>
       <ul class="header-list" v-else>
+        <li>
+          <a class="hover" @click.prevent="logout">Logout</a>
+        </li>
         <li>
           <router-link to="/user/login" class="hover">Login</router-link>
         </li>
@@ -42,11 +43,32 @@
 </template>
 
 <script>
+import firebase from "firebase";
+
 export default {
   data() {
-    return {
-      isLoggedIn: false,
-    };
+    return {};
+  },
+  methods: {
+    logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          alert("You are successfully logged out!");
+        })
+        .catch((e) => {
+          console.log(e);
+          alert(e.message);
+        });
+    },
+  },
+  computed: {
+    user() {
+      const user = this.$store.getters.getUser;
+      console.log("FROM HEADER COMPUTED:", user);
+      return user;
+    },
   },
 };
 </script>

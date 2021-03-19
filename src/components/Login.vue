@@ -60,8 +60,8 @@
 </template>
 
 <script>
-// import firebase from "firebase/app";
-import {usersCollection} from '../firebase';
+import firebase from "firebase/app";
+// import {usersCollection} from '../firebase';
 import {
   required,
   email,
@@ -88,7 +88,7 @@ export default {
       password: {
         required,
         alphaNum,
-        minLength: minLength(3),
+        minLength: minLength(6),
         maxLength: maxLength(16),
       },
     },
@@ -96,32 +96,44 @@ export default {
   methods: {
     login() {
 
-      usersCollection.get()
-      .then((querySnapshot) => {
-        const documents = querySnapshot.docs.map((doc) => {
-          return { id: doc.id, ...doc.data() };
-        });
+      // usersCollection.get()
+      // .then((querySnapshot) => {
+      //   const documents = querySnapshot.docs.map((doc) => {
+      //     return { id: doc.id, ...doc.data() };
+      //   });
 
-        console.log("LOG FROM GET STORIES: ", documents);
-      })
-      .catch((e) => {
-        console.log(e);
-        alert(e.message);
-      });
+      //   console.log("LOG FROM GET STORIES: ", documents);
+      // })
+      // .catch((e) => {
+      //   console.log(e);
+      //   alert(e.message);
+      // });
 
       
       // console.log("FormData: ", this.formData);
       // console.log("Validations: ", this.$v.formData);
 
-      // firebase
-      //   .auth()
-      //   .signInWithEmailAndPassword(this.formData.email, this.formData.password)
-      //   .then((user) => console.log(user))
-      //   .catch((e) => {
-      //     console.log("Oops: ", e);
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.formData.email, this.formData.password)
+        .then((res) => {
 
-      //     alert(e.message);
-      //   });
+          const currUser = {
+            email: res.user.email,
+            id: res.user.uid,
+            username: res.user.displayName,
+            avatar: res.user.photoURL
+          };
+
+          this.$store.commit('setUser', currUser);
+
+          const newUser = this.$store.getters.getUser;
+          console.log('From store function log: ', newUser.email);
+          })
+        .catch((e) => {
+          console.log("Oops: ", e);
+          alert(e.message);
+        });
     },
     switchMethod() {
       this.$emit("switchMethod", "Register");

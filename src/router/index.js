@@ -51,7 +51,6 @@ const routes = [
     },
     {
         path: '/user',
-        name: 'Login',
         component: User,
         redirect: '/user/login',
         children: [
@@ -65,7 +64,7 @@ const routes = [
                 component: Register
             },
             {
-                path: ':id/profile',
+                path: '/profile/:id',
                 name: 'Profile',
                 component: Profile
             }
