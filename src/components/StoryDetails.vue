@@ -23,7 +23,7 @@
       >
       </textarea>
 
-      <article class="story-details-contributers">
+      <article class="story-details-contributers" v-if="story.contributors">
         <h3>Contributors</h3>
         <el-table
           :data="story.contributors"
@@ -43,7 +43,12 @@
       </article>
     </article>
 
-    <article class="story-details-proposals">
+    <article class="story-details-initiator-cta" v-if="isInitiator">
+      <el-button @click="handleInitiatorEdit">Edit</el-button>
+      <el-button type="danger" @click="handleInitiatorDelete">Delete</el-button>
+    </article>
+
+    <article class="story-details-proposals" v-if="story.proposals">
       <h2>Proposals to review</h2>
       <el-table
         :data="story.proposals"
@@ -74,16 +79,10 @@
 
             <article class="buttons-cta">
               <article class="proposials-table-not-user-cta" v-if="!isAuthor">
-              <el-button
-                type="success"
-                size="mini"
-                v-if="!isLiked"
-              >
-                Like
-              </el-button>
-              <el-button type="danger" size="mini" v-else >
-                Unlike
-              </el-button>
+                <el-button type="success" size="mini" v-if="!isLiked">
+                  Like
+                </el-button>
+                <el-button type="danger" size="mini" v-else> Unlike </el-button>
               </article>
 
               <article class="proposials-table-user-cta" v-if="isAuthor">
@@ -130,7 +129,7 @@ import { storiesCollection } from "../firebase";
 export default {
   data() {
     return {
-      isInitiator: true,
+      isInitiator: false,
       isAuthor: true,
       isLiked: true,
       story: {},

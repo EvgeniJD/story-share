@@ -108,6 +108,8 @@ export default {
         console.log(e);
         alert(e.message);
       });
+
+      
       // console.log("FormData: ", this.formData);
       // console.log("Validations: ", this.$v.formData);
 

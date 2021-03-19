@@ -23,8 +23,6 @@
 export default {
   props: {
     story: {
-      require,
-      Object,
     },
   },
 };

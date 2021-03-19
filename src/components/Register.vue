@@ -68,11 +68,7 @@
         </p>
       </div>
 
-      <button
-        :disabled="this.$v.formData.$invalid"
-        type="submit"
-        :class="{ hover: !this.$v.formData.$invalid }"
-      >
+      <button type="submit" :class="{ hover: !this.$v.formData.$invalid }">
         Register
       </button>
     </form>
@@ -85,6 +81,7 @@
 
 <script>
 import firebase from "firebase";
+// import usersCollection from '../firebase';
 
 import {
   required,
@@ -100,6 +97,7 @@ export default {
     return {
       formData: {
         email: "",
+        username: "",
         password: "",
         repeatPassword: "",
       },
@@ -111,10 +109,15 @@ export default {
         required,
         email,
       },
+      username: {
+        required,
+        minLength: minLength(3),
+        maxLength: maxLength(25),
+      },
       password: {
         required,
         alphaNum,
-        minLength: minLength(3),
+        minLength: minLength(6),
         maxLength: maxLength(16),
       },
       repeatPassword: {
@@ -123,21 +126,63 @@ export default {
     },
   },
   methods: {
-    register() {
-      console.log("FormData: ", this.formData);
-      console.log("Validations: ", this.$v.formData);
+    async register() {
+      // console.log("FormData: ", this.formData);
+      // console.log("Validations: ", this.$v.formData);
 
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(
-          this.formData.email,
-          this.formData.password
-        )
-        .then((user) => console.log(user))
-        .catch((e) => {
-          console.log("Oops: ", e);
-          alert(e.message);
-        });
+      // const user = await firebase
+      //   .auth()
+      //   .createUserWithEmailAndPassword(
+      //     this.formData.email,
+      //     this.formData.password
+      //   )
+      //   .then((userCredential) => {
+      //     const user = userCredential.user;
+      //     console.log("USER IS: ", user);
+      //     return user;
+      //   })
+      //   .catch((e) => {
+      //     console.log("Oops: ", e);
+      //     alert(e.message);
+      //   });
+
+      // const newUser = {
+      //   id: user.uid,
+      //   email: user.email,
+      //   username: this.formData.username,
+      // };
+
+      // console.log('NewUser:', newUser);
+
+      // firebase
+      //   .firestore()
+      //   .collection("users")
+      //   .doc(user.uid)
+      //   .set(newUser)
+      //   .then((doc) => {
+      //     console.log("SUCCESS:", doc);
+      //   })
+      //   .catch((e) => {
+      //     console.log("Oops: ", e);
+      //     alert(e.message);
+      //   });
+
+      const user = firebase.auth().currentUser;
+      console.log("USER: ", user.photoURL, user.displayName, user.uid, user.email);
+
+      // user
+      //   .updateProfile({
+      //     displayName: "Evgeni Dimitrov",
+      //     photoURL: "https://scontent.fsof10-1.fna.fbcdn.net/v/t1.0-9/11218786_1122447354449411_3445061230582156527_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=jnfNox2rq3EAX9ccDMS&_nc_oc=AQknA6yEbHrYUbAdnu6zqdTURDeE69dR_8ZKEX8Y3xD2RtRSOTPFCC3csoos2Ev6yHE&_nc_ht=scontent.fsof10-1.fna&oh=32cbe6afcaea15902fa32f1ad1a4c8cb&oe=60785915",
+      //   })
+      //   .then(function (res) {
+      //     console.log('RESPONSE: ', res);
+      //   })
+      //   .catch(function (error) {
+      //     alert(error)
+      //   });
+
+
     },
     switchMethod() {
       this.$emit("switchMethod", "Login");

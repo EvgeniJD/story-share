@@ -182,7 +182,6 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     align-items: baseline;
     background-color: rgba(0, 0, 0, 0.7);
-
 }
 
 .err-msg-wrapper i {
@@ -332,6 +331,20 @@ h1, h2, h3, h4, h5, h6 {
 .story-details-contributers h3 {
     text-align: center;
     color: rgb(138 104 60);
+}
+
+.story-details-initiator-cta {
+    display: flex;
+    justify-content: space-around;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 10px;
+}
+
+.story-details-initiator-cta button {
+    width: 20%;
+    font-size: 22px;
+    padding: 5px;
+
 }
 
 
@@ -505,11 +518,11 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     align-items: center;
     height: 500px;
-
+    position: relative;
 }
 
 .profile-img-name {
-    max-width: 200px;
+    width: 235px;
 }
 
 .profile-img-name img {
@@ -517,11 +530,49 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 30%;
 }
 
-.profile-img-name p {
+.profile-img-name h4 {
     color: rgb(91 138 118);
     margin: 0;
     font-size: 26px;
     text-align: center;
+}
+
+.profile-img-name p {
+    color: rgb(132 132 132);
+    text-align: center;
+    margin: 0;
+}
+
+.profile-img-name-inputs {
+    color: rgb(132 132 132);
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    left: 10px;
+    text-align: center;
+    width: 180px;
+}
+
+.profile-img-name-inputs form,
+.profile-img-name-inputs form label {
+    display: flex;
+    flex-direction: column;
+}
+
+.image-username-add-btn {
+    position: absolute;
+    bottom: 30px;
+    left: 10px;
+    width: 180px;
+}
+
+.err-mini {
+    font-size: 12px;
+    padding: 0 0 10px 0;
+}
+
+.profile-img-name-inputs form label {
+    margin-bottom: 10px;
 }
 
 .profile-inspirations {

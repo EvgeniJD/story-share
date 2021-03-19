@@ -1,12 +1,13 @@
 <template>
   <header class="header">
-    <article class="header-logo hover">
+    <router-link to="/about" tag="article" class="header-logo hover">
       <p>
         Story Share
         <i class="fas fa-feather-alt"></i>
         <span>Let's make incredible stories together</span>
       </p>
-    </article>
+    </router-link>
+    
     <p v-if="isLoggedIn" class="header-profile hover">
       <router-link to="/user/12345/profile">
         <img
@@ -22,13 +23,13 @@
           <router-link to="/stories" class="hover">Stories</router-link>
         </li>
         <li>
+          <router-link to="/stories/create" class="hover">Create Story</router-link>
+        </li>
+        <li>
           <a href="" class="hover">Logout</a>
         </li>
       </ul>
       <ul class="header-list" v-else>
-        <li>
-          <router-link to="/about" class="hover">About us</router-link>
-        </li>
         <li>
           <router-link to="/user/login" class="hover">Login</router-link>
         </li>
@@ -44,7 +45,7 @@
 export default {
   data() {
     return {
-      isLoggedIn: true,
+      isLoggedIn: false,
     };
   },
 };

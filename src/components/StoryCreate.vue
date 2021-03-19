@@ -49,23 +49,24 @@ export default {
   },
   methods: {
     createStorie() {
-    //   const newStorie = {
-    //     image: this.image,
-    //     content: this.content,
-    //     title: this.title,
-    //   };
+      const newStorie = {
+        image: this.image,
+        content: this.content,
+        title: this.title,
+      };
 
-    //   storiesCollection
-    //     .add(newStorie)
-    //     .then((doc) => {
-    //       console.log("I DID IT!!!", doc, doc.id);
-    //     })
-    //     .catch((e) => {
-    //       console.log(e);
-    //       alert(e.message);
-    //     });
+      storiesCollection
+        .add(newStorie)
+        .then((doc) => {
+          console.log("I DID IT!!!", doc, doc.id);
+        })
+        .catch((e) => {
+          console.log(e);
+          alert(e.message);
+        });
 
-    storiesCollection.doc('u7Zrulemh5fAcUD3ZUop').delete().then((res) => { console.log(res); console.log("Deleted"); }).catch((e) => { console.log(e);})
+    // storiesCollection.doc('u7Zrulemh5fAcUD3ZUop').delete().then((res) => { console.log(res); console.log("Deleted"); }).catch((e) => { console.log(e);})
+
     },
   },
 };

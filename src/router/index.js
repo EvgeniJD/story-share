@@ -19,11 +19,17 @@ Vue.use(VueRouter)
 
 const routes = [
     {
+        path: '/',
+        redirect: '/about',
+    },
+    {
         path: '/about',
+        name: 'About',
         component: About
     },
     {
         path: '/stories',
+        name: 'Stories',
         component: StoriesWrapper,
         redirect: '/stories/all',
         children: [
@@ -33,16 +39,19 @@ const routes = [
             },
             {
                 path: '/stories/create',
+                name: 'StoryCreate',
                 component: StoryCreate
             },
             {
                 path: '/stories/:id',
+                name: 'StoryDetails',
                 component: StoryDetails
             },
         ]
     },
     {
         path: '/user',
+        name: 'Login',
         component: User,
         redirect: '/user/login',
         children: [
@@ -52,16 +61,19 @@ const routes = [
             },
             {
                 path: 'register',
+                name: 'Register',
                 component: Register
             },
             {
                 path: ':id/profile',
+                name: 'Profile',
                 component: Profile
             }
         ]
     },
     {
         path: '*',
+        name: 'NotFound',
         component: NotFound
     },
 ]
