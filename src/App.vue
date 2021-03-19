@@ -44,20 +44,13 @@ export default {
       this.chosenMethod = method;
     },
   },
-  async mounted() {
-    const res = await firebase.auth().currentUser;
-    let currUser = null; 
+  mounted() {
+    const res = firebase.auth().currentUser;
 
     if (res) {
-      currUser = {
-        email: res.email,
-        id: res.uid,
-        username: res.displayName,
-        avatar: res.photoURL,
-      };
+      const currUser = {...res.providerData[0], uid: res.uid };
+      this.$store.commit("setUser", currUser);
     }
-
-    this.$store.commit("setUser", currUser);
   },
 };
 </script>

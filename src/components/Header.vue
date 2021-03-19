@@ -8,9 +8,9 @@
       </p>
     </router-link>
 
-      <router-link :to="`/user/profile/${user.id}`" class="header-profile hover" v-if="user">
-        <img v-if="user.avatar" :src="user.avatar" alt="" />
-        <span v-if="user.username">Welcome, {{ user.username }}</span>
+      <router-link :to="`/user/profile/${user.uid}`" class="header-profile hover" v-if="user">
+        <img v-if="user.photoURL" :src="user.photoURL" alt="" />
+        <span v-if="user.displayName">Welcome, {{ user.displayName }}</span>
         <span v-else>Welcome, {{ user.email }}</span>
       </router-link>
     <nav>
@@ -55,6 +55,8 @@ export default {
         .auth()
         .signOut()
         .then(() => {
+          this.$store.commit('setUser', null);
+          this.$router.push({name: 'Login'})
           alert("You are successfully logged out!");
         })
         .catch((e) => {

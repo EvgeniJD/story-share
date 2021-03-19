@@ -80,7 +80,8 @@
 </template>
 
 <script>
-import firebase from "firebase";
+import firebase from "firebase/app";
+import { registerUser, setUserToDB } from "../services/user";
 // import usersCollection from '../firebase';
 
 import {
@@ -127,48 +128,37 @@ export default {
   },
   methods: {
     async register() {
-      // console.log("FormData: ", this.formData);
-      // console.log("Validations: ", this.$v.formData);
+      try {
+        await registerUser(this.formData.email, this.formData.password);
 
-      // const user = await firebase
-      //   .auth()
-      //   .createUserWithEmailAndPassword(
-      //     this.formData.email,
-      //     this.formData.password
-      //   )
-      //   .then((userCredential) => {
-      //     const user = userCredential.user;
-      //     console.log("USER IS: ", user);
-      //     return user;
-      //   })
-      //   .catch((e) => {
-      //     console.log("Oops: ", e);
-      //     alert(e.message);
-      //   });
+        const userCredentials = firebase.auth().currentUser;
+        const currUser = {
+          ...userCredentials.providerData[0],
+          uid: userCredentials.uid,
+        };
 
-      // const newUser = {
-      //   id: user.uid,
-      //   email: user.email,
-      //   username: this.formData.username,
-      // };
+        this.$store.commit("setUser", currUser);
 
-      // console.log('NewUser:', newUser);
+        const { uid } = currUser;
 
-      // firebase
-      //   .firestore()
-      //   .collection("users")
-      //   .doc(user.uid)
-      //   .set(newUser)
-      //   .then((doc) => {
-      //     console.log("SUCCESS:", doc);
-      //   })
-      //   .catch((e) => {
-      //     console.log("Oops: ", e);
-      //     alert(e.message);
-      //   });
+        const newUserToDB = {
+          uid,
+          proposals: [],
+          stories: [],
+          inspirations: [],
+        };
 
-      const user = firebase.auth().currentUser;
-      console.log("USER: ",user);
+        await setUserToDB(newUserToDB);
+
+        this.$router.push({ name: "Stories" });
+        
+      } catch (e) {
+        console.log(e);
+        alert(e.message);
+      }
+
+      // const user = firebase.auth().currentUser;
+      // console.log("USER: ",user);
 
       // user
       //   .updateProfile({
@@ -181,11 +171,6 @@ export default {
       //   .catch(function (error) {
       //     alert(error)
       //   });
-
-
-    },
-    switchMethod() {
-      this.$emit("switchMethod", "Login");
     },
   },
 };

@@ -118,17 +118,12 @@ export default {
         .signInWithEmailAndPassword(this.formData.email, this.formData.password)
         .then((res) => {
 
-          const currUser = {
-            email: res.user.email,
-            id: res.user.uid,
-            username: res.user.displayName,
-            avatar: res.user.photoURL
-          };
+          const currUser = {...res.user.providerData[0], uid: res.user.uid };
 
           this.$store.commit('setUser', currUser);
 
-          const newUser = this.$store.getters.getUser;
-          console.log('From store function log: ', newUser.email);
+          this.$router.push({name: 'Stories'})
+
           })
         .catch((e) => {
           console.log("Oops: ", e);

@@ -2,13 +2,14 @@
   <section class="profile">
     <article class="profile-img-name">
       <img
-        :src="formData.imageURL"
+        :src="formData.imageURL || userImage"
         alt=""
       />
-      <h4>{{ formData.username }}</h4>
-      <article class="profile-img-name-inputs" v-if="true">
+      <h4>{{ formData.username || userUsername }}</h4>
+
+      <article class="profile-img-name-inputs" v-if="isUpdateUserData">
         <form>
-          <label for="username" v-if="true">
+          <label for="username" >
             Username:
             <input
               type="text"
@@ -66,8 +67,9 @@
           </div>
         </form>
       </article>
-      <p>isaax0866@abv.bg</p>
-          <el-button type="success" class="image-username-add-btn">ADD</el-button>
+      <p>{{ userEmail }}</p>
+          <el-button v-if="isUpdateUserData" type="success" class="image-username-add-btn" @click="addNameAndImage">ADD</el-button>
+          <el-button v-else type="success" class="image-username-add-btn" @click="toUpdateMode">Update Profile info</el-button>
     </article>
     <article class="profile-stories">
       <h2>My stories</h2>
@@ -105,6 +107,7 @@
 
 <script>
 import { required, minLength, maxLength, url } from "vuelidate/lib/validators";
+import { updateUserInfo, getCurrentUser } from '../services/user.js';
 
 export default {
   data() {
@@ -244,7 +247,26 @@ export default {
         username: "",
         imageURL: "",
       },
+      isUpdateUserData: false,
     };
+  },
+  methods: {
+    async addNameAndImage() {
+      let res = null;
+      try {
+        await updateUserInfo(this.formData.username, this.formData.imageURL);
+        res = getCurrentUser();
+        const currUser = {...res.providerData[0], uid: res.uid }
+        this.$store.commit('setUser', currUser);
+        this.isUpdateUserData = false;
+      } catch (e) {
+        console.log(e);
+        alert(e.message);
+      }
+    },
+    toUpdateMode() {
+      this.isUpdateUserData = true;
+    }
   },
   validations: {
     formData: {
@@ -258,6 +280,37 @@ export default {
         url,
       },
     },
+  },
+  computed: {
+    user() {
+      const user = this.$store.getters.getUser;
+      console.log("FROM profile COMPUTED:", user);
+      return user;
+    },
+    userUsername() {
+      if(this.user) {
+        return this.user.displayName;
+      }
+      return null;
+    },
+    userImage() {
+      if(this.user) {
+        return this.user.photoURL;
+      }
+      return null
+    },
+    userEmail() {
+      if(this.user) {
+        return this.user.email;
+      }
+      return null
+    },
+    isUserDONTHaveUsernameAndImage() {
+      if(this.user) {
+        return !this.user.displayName && !this.user.photoURL;
+      }
+      return false;
+    }
   },
 };
 </script>

@@ -56,6 +56,7 @@ const routes = [
         children: [
             {
                 path: 'login',
+                name: 'Login',
                 component: Login
             },
             {
@@ -64,7 +65,7 @@ const routes = [
                 component: Register
             },
             {
-                path: '/profile/:id',
+                path: 'profile/:id',
                 name: 'Profile',
                 component: Profile
             }
