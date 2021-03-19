@@ -61,7 +61,6 @@
 
 <script>
 import firebase from "firebase/app";
-// import {usersCollection} from '../firebase';
 import {
   required,
   email,
@@ -95,24 +94,6 @@ export default {
   },
   methods: {
     login() {
-
-      // usersCollection.get()
-      // .then((querySnapshot) => {
-      //   const documents = querySnapshot.docs.map((doc) => {
-      //     return { id: doc.id, ...doc.data() };
-      //   });
-
-      //   console.log("LOG FROM GET STORIES: ", documents);
-      // })
-      // .catch((e) => {
-      //   console.log(e);
-      //   alert(e.message);
-      // });
-
-      
-      // console.log("FormData: ", this.formData);
-      // console.log("Validations: ", this.$v.formData);
-
       firebase
         .auth()
         .signInWithEmailAndPassword(this.formData.email, this.formData.password)
@@ -129,9 +110,6 @@ export default {
           console.log("Oops: ", e);
           alert(e.message);
         });
-    },
-    switchMethod() {
-      this.$emit("switchMethod", "Register");
     },
   },
 };

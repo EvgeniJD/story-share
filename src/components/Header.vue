@@ -29,9 +29,6 @@
       </ul>
       <ul class="header-list" v-else>
         <li>
-          <a class="hover" @click.prevent="logout">Logout</a>
-        </li>
-        <li>
           <router-link to="/user/login" class="hover">Login</router-link>
         </li>
         <li>
@@ -43,26 +40,18 @@
 </template>
 
 <script>
-import firebase from "firebase";
-
+import { logoutUser } from '../services/user';
 export default {
-  data() {
-    return {};
-  },
   methods: {
-    logout() {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          this.$store.commit('setUser', null);
-          this.$router.push({name: 'Login'})
-          alert("You are successfully logged out!");
-        })
-        .catch((e) => {
-          console.log(e);
-          alert(e.message);
-        });
+    async logout() {
+      try {
+        await logoutUser();
+        this.$store.commit('setUser', null);
+          this.$router.push({name: 'Login'});
+      } catch (e) {
+        console.log(e);
+        alert(e.message);
+      }
     },
   },
   computed: {

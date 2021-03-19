@@ -50,3 +50,16 @@ export async function setUserToDB(user) {
             alert(e.message);
         });
 }
+
+export async function logoutUser() {
+    return firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          alert("You are successfully logged out!");
+        })
+        .catch((e) => {
+          console.log(e);
+          alert(e.message);
+        });
+}
