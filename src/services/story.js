@@ -10,4 +10,7 @@ export async function getStory(storyID) {
     return storiesCollection.doc(storyID).get();
 }
 
+export async function deleteStory(storyID) {
+    return storiesCollection.doc(storyID).delete();
+}
 

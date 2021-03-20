@@ -6,17 +6,18 @@
         <i class="fas fa-heart"></i>
         <p class="story-details-header-likes-count">{{ story.likes }}</p>
       </article>
-      <p class="story-details-header-initiator">
-        Initiator: {{ initiator }}
-      </p>
+      <p class="story-details-header-initiator">Initiator: {{ initiator }}</p>
     </article>
 
     <article class="story-details-content">
       <article class="story-details-content-image">
-      <img :src="story.image" alt="" />
+        <img :src="story.image" alt="" />
       </article>
-      
-      <article v-html="story.content" class="story-details-content-text"></article>
+
+      <article
+        v-html="story.content"
+        class="story-details-content-text"
+      ></article>
 
       <article class="story-details-contributers" v-if="story.contributors">
         <h3>Contributors</h3>
@@ -40,13 +41,13 @@
 
     <article class="story-details-initiator-cta" v-if="isInitiator">
       <router-link :to="`/stories/edit/${this.$route.params.id}`">
-      <el-button>Edit</el-button>
+        <el-button>Edit</el-button>
       </router-link>
       <el-button type="danger" @click="handleInitiatorDelete">Delete</el-button>
     </article>
 
     <article class="story-details-proposals" v-if="story.proposals">
-      <h2>Proposals to review</h2>
+      <h2>Proposals</h2>
       <el-table
         :data="story.proposals"
         style="width: 100%"
@@ -121,7 +122,8 @@
 </template>
 
 <script>
-import { getStory } from '../services/story';
+import { getStory, deleteStory } from "../services/story";
+import { deleteStoryFromUser } from "../services/user";
 
 export default {
   data() {
@@ -131,7 +133,7 @@ export default {
       isLiked: true,
       story: {},
       //throw me an error if i use story.initiator.displayName !!!
-      initiator: ''
+      initiator: "",
     };
   },
   methods: {
@@ -139,9 +141,31 @@ export default {
       console.log("Index: ", index);
       console.log("Row: ", row);
     },
-    handleInitiatorDelete() {
-      console.log('handleInitiatorDelete');
-    }
+    async handleInitiatorDelete() {
+      const confirmResult = window.confirm(
+        "Do you really want to delete this story?"
+      );
+
+      if (confirmResult) {
+        const user = this.$store.getters.getUser;
+
+        const objToDelete = {
+          image: this.story.image,
+          id: this.$route.params.id,
+        };
+
+        try {
+          await deleteStory(this.$route.params.id);
+          await deleteStoryFromUser(user.uid, objToDelete);
+          this.$router.push({ name: "Stories" });
+        } catch (e) {
+          console.log(e);
+          alert(e.message);
+        }
+      } else {
+        return;
+      }
+    },
   },
   async mounted() {
     const storyID = this.$route.params.id;
@@ -150,11 +174,9 @@ export default {
       const currStory = await getStory(storyID);
       this.story = currStory.data();
       this.initiator = this.story.initiator.displayName;
-      this.$store.commit('setCurrStory', this.story);
-      console.log('MUST BE STORED!!!');
     } catch (e) {
       console.log(e);
-      alert(e.message)
+      alert(e.message);
     }
   },
 };

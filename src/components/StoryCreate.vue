@@ -80,6 +80,8 @@ export default {
 
         const updatedInfo = await addStoryToUser(currUser.uid, storyInfo);
         console.log('UPDATED INFO', updatedInfo);
+
+        this.$router.push({name: 'Stories'});
       } catch (e) {
         console.log(e);
         alert(e.message);

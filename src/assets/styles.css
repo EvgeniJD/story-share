@@ -241,9 +241,15 @@ h1, h2, h3, h4, h5, h6 {
     overflow: hidden;
 }
 
-.stories-story-info h3
+.stories-story-info-heading {
+    display: flex;
+    flex-direction: column;
+}
+
+.stories-story-info-heading h3
  {
     margin: 0;
+    text-align: center;
 }
 
 .stories-story-info-author {

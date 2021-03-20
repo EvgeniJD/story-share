@@ -10,11 +10,15 @@
 
     <button @click="showUser">Current User</button>
 
-      <router-link :to="`/user/profile/${user.uid}`" class="header-profile hover" v-if="user">
-        <img v-if="user.photoURL" :src="user.photoURL" alt="" />
-        <span v-if="user.displayName">Welcome, {{ user.displayName }}</span>
-        <span v-else>Welcome, {{ user.email }}</span>
-      </router-link>
+    <router-link
+      :to="`/user/profile/${user.uid}`"
+      class="header-profile hover"
+      v-if="user"
+    >
+      <img v-if="user.photoURL" :src="user.photoURL" alt="" />
+      <span v-if="user.displayName">Welcome, {{ user.displayName }}</span>
+      <span v-else>Welcome, {{ user.email }}</span>
+    </router-link>
     <nav>
       <ul class="header-list" v-if="user">
         <li>
@@ -42,22 +46,28 @@
 </template>
 
 <script>
-import { logoutUser, getCurrentUser } from '../services/user';
+import { logoutUser, getCurrentUser } from "../services/user";
 export default {
   methods: {
     async logout() {
-      try {
-        await logoutUser();
-        this.$store.commit('setUser', null);
-          this.$router.push({name: 'Login'});
-      } catch (e) {
-        console.log(e);
-        alert(e.message);
+      const confirmResult = window.confirm("Do you really want to leave?");
+
+      if (confirmResult) {
+        try {
+          await logoutUser();
+          this.$store.commit("setUser", null);
+          this.$router.push({ name: "Login" });
+        } catch (e) {
+          console.log(e);
+          alert(e.message);
+        }
+      } else {
+        return;
       }
     },
     showUser() {
       console.log(getCurrentUser());
-    }
+    },
   },
   computed: {
     user() {

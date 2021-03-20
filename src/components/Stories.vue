@@ -1,7 +1,7 @@
 <template>
   <section class="stories">
     <h1>Stories</h1>
-    <Story v-for="(story, i) in stories" :key="i" :story="story" />
+    <Story v-for="story in stories" :key="story.id" :story="story" />
   </section>
 </template>
 
