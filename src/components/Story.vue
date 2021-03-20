@@ -3,7 +3,7 @@
     <img :src="story.image" alt="" />
     <article class="stories-story-info">
       <h3>{{ story.title }}</h3>
-      <p class="stories-story-info-author">Initiator: {{ story.initiator }}</p>
+      <p class="stories-story-info-author">Initiator: {{ story.initiator.displayName }}</p>
       <article class="stories-story-footer">
         <p class="stories-story-footer-created">
           {{ story.created }}

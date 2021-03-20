@@ -1,6 +1,6 @@
 <template>
   <section class="create-story">
-    <h1>Create new story</h1>
+    <h1>Update story</h1>
     <article class="create-story-inputs">
       <label>
         Title:
@@ -16,7 +16,7 @@
       <VueEditor v-model="content" />
       <article class="editor-image">
         <img :src="image" alt="" v-if="image" />
-        <button class="create-btn" @click="createStorie">Create</button>
+        <button class="create-btn" @click="updateStory">Update</button>
       </article>
     </article>
   </section>
@@ -25,7 +25,7 @@
 <script>
 import { VueEditor } from "vue2-editor";
 import { required, minLength, url, alphaNum } from "vuelidate/lib/validators";
-import { saveStory } from "../services/story";
+import { saveStory, getStory } from "../services/story";
 import { addStoryToUser } from "../services/user";
 
 export default {
@@ -38,6 +38,21 @@ export default {
       title: "",
       content: "",
     };
+  },
+  async mounted() {
+    const storyID = this.$route.params.id;
+
+    try {
+      const storyResponse = await getStory(storyID);
+      const currStory = storyResponse.data();
+      console.log("CURR STORY: ", currStory);
+      this.image = currStory.image;
+      this.title = currStory.title;
+      this.content = currStory.content;
+    } catch (e) {
+      console.log(e);
+      alert(e.message);
+    }
   },
   validations: {
     image: {
@@ -55,7 +70,7 @@ export default {
     },
   },
   methods: {
-    async createStorie() {
+    async updateStory() {
       const currUser = this.$store.getters.getUser;
 
       const story = {
@@ -79,7 +94,7 @@ export default {
         };
 
         const updatedInfo = await addStoryToUser(currUser.uid, storyInfo);
-        console.log('UPDATED INFO', updatedInfo);
+        console.log("UPDATED INFO", updatedInfo);
       } catch (e) {
         console.log(e);
         alert(e.message);

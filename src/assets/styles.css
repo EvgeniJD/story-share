@@ -276,6 +276,7 @@ h1, h2, h3, h4, h5, h6 {
 .story-details {
     width: 95%;
     margin: 20px auto;
+    background-color: rgba(0, 0, 0, 0.8);
 }
 
 .story-details-header {
@@ -284,7 +285,6 @@ h1, h2, h3, h4, h5, h6 {
     color: rgb(132 132 132);
     padding: 0 20px;
     border-bottom: 1px solid rgb(91 138 118);
-    background-color: rgba(0, 0, 0, 0.8);
 }
 
 .story-details-header h1 {
@@ -306,18 +306,32 @@ h1, h2, h3, h4, h5, h6 {
 
 
 
-.story-details-content textarea {
-    flex-grow: 1;
+.story-details-content article {
     font-size: 18px;
-    background-color: rgba(0, 0, 0, 0.8);
     color: rgb(132 132 132);
     border: none;
+}
+
+.story-details-content-image {
+    flex-basis: 20%;
+}
+
+.story-details-content-image img {
+    width: 100%;
+}
+
+.story-details-content-text {
+    flex-basis: 60%;
+    text-align:left;
+    overflow-y: scroll;
+    padding: 20px;
+    
 }
 
 .story-details-contributers {
     color: rgb(132 132 132);
     border-top: 1px solid rgb(91 138 118);
-    background-color: rgba(0, 0, 0, 0.8);
+    flex-basis: 20%;
 }
 
 #contributors,
@@ -342,14 +356,6 @@ h1, h2, h3, h4, h5, h6 {
     background-color: rgba(0, 0, 0, 0.8);
     padding: 10px;
 }
-
-.story-details-initiator-cta button {
-    width: 20%;
-    font-size: 22px;
-    padding: 5px;
-
-}
-
 
 .story-details-proposals {
     margin-top: 20px;
@@ -442,18 +448,17 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0 10px;
 }
 
+.quillWrapper {
+    color: rgb(132 132 132);
+    flex-basis: 80%;
+}
+
 .editor-image {
-    flex-basis: 16%;
+    flex-basis: 20%;
 }
 
 .editor-image img {
     width: 100%;
-}
-
-.quillWrapper {
-    color: rgb(132 132 132);
-    flex-basis: 84%;
-    height: 350px;
 }
 
 .create-btn {
@@ -583,8 +588,19 @@ h1, h2, h3, h4, h5, h6 {
     margin-left: 50px;
 }
 
-.profile-inspirations h2 {
+.profile-data-heading {
+    display: flex;
+    align-items: center;
+}
+
+.profile-data-heading h2{
     color: rgb(132 132 132);
+}
+
+.profile-data-heading button {
+    margin-left: 10px;
+    font-size: 22px;
+    font-weight: bolder;
 }
 
 .carousel-image {

@@ -4,7 +4,7 @@
       <img :src="formData.imageURL || userImage" alt="" />
       <h4>{{ formData.username || userUsername }}</h4>
 
-      <article class="profile-img-name-inputs" v-if="isInUpdateMode">
+      <article class="profile-img-name-inputs" v-if="isInUpdateUserMode">
         <form>
           <label for="username">
             Username:
@@ -66,7 +66,7 @@
       </article>
       <p>{{ userEmail }}</p>
       <el-button
-        v-if="isInUpdateMode"
+        v-if="isInUpdateUserMode"
         type="success"
         class="image-username-add-btn"
         @click="addNameAndImage"
@@ -77,12 +77,19 @@
         v-else
         type="success"
         class="image-username-add-btn"
-        @click="toUpdateMode"
+        @click="toUpdateUserMode"
         >Update Profile info</el-button
       >
     </article>
     <article class="profile-stories">
-      <h2>My stories</h2>
+      <article class="profile-data-heading">
+        <h2>My stories</h2>
+        <router-link to="/stories/create">
+          <el-button type="success" size="mini" class="profile-mini-add-btn">
+          +
+        </el-button>
+        </router-link>
+      </article>
       <el-carousel :interval="4000" height="300px" indicator-position="outside">
         <el-carousel-item v-for="(story, i) in myStories" :key="i">
           <img :src="story.image" alt="" class="carousel-image" />
@@ -91,8 +98,14 @@
     </article>
 
     <article class="profile-inspirations">
-      <h2>My inspirations</h2>
-      <el-carousel :interval="4000" height="300px" indicator-position="outside">
+      <article class="profile-data-heading">
+        <h2>My inspirations</h2>
+        <el-button type="success" size="mini" class="profile-mini-add-btn" @click="onAddInspiration">
+          +
+        </el-button>
+      </article>
+
+      <el-carousel :interval="4000" height="300px" indicator-position="outside" v-if="!isInUpdateInspirationMode">
         <el-carousel-item v-for="(img, i) in inspirations" :key="i">
           <img :src="img" alt="" class="carousel-image" />
         </el-carousel-item>
@@ -100,7 +113,7 @@
     </article>
 
     <article class="profile-purposes">
-      <h2>My last suggestions</h2>
+      <h2>My last purposals</h2>
       <ul>
         <li v-for="(purpose, i) in myPurposes" :key="i">
           <a href="">
@@ -257,7 +270,8 @@ export default {
         username: "",
         imageURL: "",
       },
-      isInUpdateMode: false,
+      isInUpdateUserMode: false,
+      isInUpdateInspirationMode: false,
     };
   },
   methods: {
@@ -268,15 +282,18 @@ export default {
         res = getCurrentUser();
         const currUser = { ...res.providerData[0], uid: res.uid };
         this.$store.commit("setUser", currUser);
-        this.isInUpdateMode = false;
+        this.isInUpdateUserMode = false;
       } catch (e) {
         console.log(e);
         alert(e.message);
       }
     },
-    toUpdateMode() {
-      this.isInUpdateMode = true;
+    toUpdateUserMode() {
+      this.isInUpdateUserMode = true;
     },
+    onAddInspiration() {
+      this.isInUpdateInspirationMode = true;
+    }
   },
   validations: {
     formData: {

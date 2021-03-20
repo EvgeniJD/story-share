@@ -8,6 +8,8 @@
       </p>
     </router-link>
 
+    <button @click="showUser">Current User</button>
+
       <router-link :to="`/user/profile/${user.uid}`" class="header-profile hover" v-if="user">
         <img v-if="user.photoURL" :src="user.photoURL" alt="" />
         <span v-if="user.displayName">Welcome, {{ user.displayName }}</span>
@@ -40,7 +42,7 @@
 </template>
 
 <script>
-import { logoutUser } from '../services/user';
+import { logoutUser, getCurrentUser } from '../services/user';
 export default {
   methods: {
     async logout() {
@@ -53,6 +55,9 @@ export default {
         alert(e.message);
       }
     },
+    showUser() {
+      console.log(getCurrentUser());
+    }
   },
   computed: {
     user() {

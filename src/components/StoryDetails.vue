@@ -7,21 +7,16 @@
         <p class="story-details-header-likes-count">{{ story.likes }}</p>
       </article>
       <p class="story-details-header-initiator">
-        Initiator: {{ story.initiator }}
+        Initiator: {{ initiator }}
       </p>
     </article>
 
     <article class="story-details-content">
+      <article class="story-details-content-image">
       <img :src="story.image" alt="" />
-      <textarea
-        name=""
-        id=""
-        cols="30"
-        rows="10"
-        readonly
-        v-model="story.content"
-      >
-      </textarea>
+      </article>
+      
+      <article v-html="story.content" class="story-details-content-text"></article>
 
       <article class="story-details-contributers" v-if="story.contributors">
         <h3>Contributors</h3>
@@ -44,7 +39,9 @@
     </article>
 
     <article class="story-details-initiator-cta" v-if="isInitiator">
-      <el-button @click="handleInitiatorEdit">Edit</el-button>
+      <router-link :to="`/stories/edit/${this.$route.params.id}`">
+      <el-button>Edit</el-button>
+      </router-link>
       <el-button type="danger" @click="handleInitiatorDelete">Delete</el-button>
     </article>
 
@@ -124,15 +121,17 @@
 </template>
 
 <script>
-import { storiesCollection } from "../firebase";
+import { getStory } from '../services/story';
 
 export default {
   data() {
     return {
-      isInitiator: false,
+      isInitiator: true,
       isAuthor: true,
       isLiked: true,
       story: {},
+      //throw me an error if i use story.initiator.displayName !!!
+      initiator: ''
     };
   },
   methods: {
@@ -140,19 +139,23 @@ export default {
       console.log("Index: ", index);
       console.log("Row: ", row);
     },
+    handleInitiatorDelete() {
+      console.log('handleInitiatorDelete');
+    }
   },
-  mounted() {
-    const storyId = this.$route.params.id;
-    storiesCollection
-      .doc(storyId)
-      .get()
-      .then((doc) => {
-        this.story = doc.data();
-      })
-      .catch((e) => {
-        console.log(e);
-        alert(e.message);
-      });
+  async mounted() {
+    const storyID = this.$route.params.id;
+
+    try {
+      const currStory = await getStory(storyID);
+      this.story = currStory.data();
+      this.initiator = this.story.initiator.displayName;
+      this.$store.commit('setCurrStory', this.story);
+      console.log('MUST BE STORED!!!');
+    } catch (e) {
+      console.log(e);
+      alert(e.message)
+    }
   },
 };
 </script>

@@ -18,7 +18,7 @@ export async function registerUser(email, password) {
 
 }
 
-export function updateUserInfo(username, imageURL) {
+export async function updateUserInfo(username, imageURL) {
     var user = firebase.auth().currentUser;
 
     return user.updateProfile({
@@ -56,10 +56,18 @@ export async function logoutUser() {
         .auth()
         .signOut()
         .then(() => {
-          alert("You are successfully logged out!");
+            alert("You are successfully logged out!");
         })
         .catch((e) => {
-          console.log(e);
-          alert(e.message);
+            console.log(e);
+            alert(e.message);
         });
+}
+
+export async function addStoryToUser(userID, story) {
+    const userRef = firebase.firestore().collection("users").doc(userID);
+
+    userRef.update({
+        stories: firebase.firestore.FieldValue.arrayUnion(story)
+    });
 }
