@@ -7,6 +7,7 @@ import Stories from '../components/Stories.vue';
 import StoryDetails from '../components/StoryDetails.vue';
 import StoryCreate from '../components/StoryCreate.vue';
 import StoryEdit from '../components/StoryEdit.vue';
+import StoryAddProposal from '../components/StoryAddProposal.vue';
 import User from '../components/User.vue';
 import Login from '../components/Login.vue';
 import Register from '../components/Register.vue';
@@ -46,12 +47,17 @@ const routes = [
             {
                 path: '/stories/:id',
                 name: 'StoryDetails',
-                component: StoryDetails
+                component: StoryDetails,
             },
             {
                 path: '/stories/edit/:id',
                 name: 'StoryEdit',
                 component: StoryEdit
+            },
+            {
+                path: '/stories/add-proposal/:id',
+                name: 'StoryAddProposal',
+                component: StoryAddProposal
             },
         ]
     },

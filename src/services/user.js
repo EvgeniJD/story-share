@@ -67,7 +67,7 @@ export async function logoutUser() {
 export async function addStoryToUser(userID, story) {
     const userRef = firebase.firestore().collection("users").doc(userID);
 
-    userRef.update({
+    return userRef.update({
         stories: firebase.firestore.FieldValue.arrayUnion(story)
     });
 }
@@ -79,4 +79,33 @@ export async function deleteStoryFromUser(userID, objToDelete) {
         stories: firebase.firestore.FieldValue.arrayRemove(objToDelete)
     })
     
+}
+
+export async function addLikedStoryToUser(userID, storyID) {
+    const userRef = firebase.firestore().collection("users").doc(userID);
+
+    return userRef.update({
+        storiesLiked: firebase.firestore.FieldValue.arrayUnion(storyID)
+    });
+}
+
+export async function removeLikedStoryFromUser(userID, storyID) {
+    const userRef = firebase.firestore().collection("users").doc(userID);
+
+    return userRef.update({
+        storiesLiked: firebase.firestore.FieldValue.arrayRemove(storyID)
+    });
+}
+
+export async function getUserData(userID) {
+    const userRef = firebase.firestore().collection("users").doc(userID);
+
+   return userRef.get().then((doc) => {
+       console.log(doc.data());
+       return doc.data();
+   })
+   .catch((e) => {
+       console.log(e);
+       alert(e.message);
+   })
 }

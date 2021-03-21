@@ -6,7 +6,9 @@
         <i class="fas fa-heart"></i>
         <p class="story-details-header-likes-count">{{ story.likes }}</p>
       </article>
-      <p class="story-details-header-initiator">Initiator: {{ initiator }}</p>
+      <p class="story-details-header-initiator">
+        Initiator: {{ initiatorDisplayName }}
+      </p>
     </article>
 
     <article class="story-details-content">
@@ -46,8 +48,28 @@
       <el-button type="danger" @click="handleInitiatorDelete">Delete</el-button>
     </article>
 
+    <article
+      class="story-details-initiator-cta"
+      v-if="!isLiked && !isInitiator"
+    >
+      <el-button type="success" @click="onLike"
+        ><i class="fas fa-thumbs-up"></i
+      ></el-button>
+    </article>
+
+    <article class="story-details-initiator-cta" v-if="isLiked && !isInitiator">
+      <el-button type="danger" @click="onUnlike"
+        ><i class="fas fa-thumbs-down"></i
+      ></el-button>
+    </article>
+
     <article class="story-details-proposals" v-if="story.proposals">
+      <article class="story-details-proposals-heading">
       <h2>Proposals</h2>
+      <router-link :to="`/stories/add-proposal/${this.$route.params.id}`">
+      <el-button type="success">+</el-button>
+      </router-link>
+      </article>
       <el-table
         :data="story.proposals"
         style="width: 100%"
@@ -122,18 +144,25 @@
 </template>
 
 <script>
-import { getStory, deleteStory } from "../services/story";
-import { deleteStoryFromUser } from "../services/user";
+import { getStory, deleteStory, likeStory, unlikeStory } from "../services/story";
+import {
+  deleteStoryFromUser,
+  addLikedStoryToUser,
+  removeLikedStoryFromUser,
+  getUserData,
+} from "../services/user";
 
 export default {
   data() {
     return {
-      isInitiator: true,
       isAuthor: true,
-      isLiked: true,
       story: {},
       //throw me an error if i use story.initiator.displayName !!!
-      initiator: "",
+      initiatorDisplayName: "",
+      storyInitiatorID: "",
+      userData: null,
+      isLiked: false,
+      isInitiator: false
     };
   },
   methods: {
@@ -166,14 +195,64 @@ export default {
         return;
       }
     },
+    async onLike() {
+      const user = this.$store.getters.getUser;
+      const storyID = this.$route.params.id;
+
+      try {
+        await likeStory(storyID);
+        await addLikedStoryToUser(user.uid, storyID);
+        this.story.likes += 1;
+        this.isLiked = true;
+        this.$store.commit('setCurrStory', this.story);
+      } catch (e) {
+        console.log(e);
+        alert(e.message);
+      }
+    },
+    async onUnlike() {
+      const user = this.$store.getters.getUser;
+      const storyID = this.$route.params.id;
+
+      try {
+        await unlikeStory(storyID);
+        await removeLikedStoryFromUser(user.uid, storyID);
+        this.story.likes -= 1;
+        this.isLiked = false;
+        this.$store.commit('setCurrStory', this.story);
+      } catch (e) {
+        console.log(e);
+        alert(e.message);
+      }
+    },
   },
-  async mounted() {
+  async created() {
     const storyID = this.$route.params.id;
+    const user = this.$store.getters.getUser;
+    let userData = null;
+
+    try {
+      userData = await getUserData(user.uid);
+      console.log('USERDATA ', userData);
+      this.userData = userData;
+      if(userData.storiesLiked.includes(storyID)) {
+        this.isLiked = true;
+      }
+      this.$store.commit("setUserData", userData);
+    } catch (e) {
+      console.log(e);
+      alert(e.message);
+    }
 
     try {
       const currStory = await getStory(storyID);
       this.story = currStory.data();
-      this.initiator = this.story.initiator.displayName;
+      this.initiatorDisplayName = this.story.initiator.displayName;
+      this.storyInitiatorID = this.story.initiator.uid;
+      if(this.storyInitiatorID === user.uid) {
+        this.isInitiator = true;
+      }
+      this.$store.commit("setCurrStory", this.story);
     } catch (e) {
       console.log(e);
       alert(e.message);

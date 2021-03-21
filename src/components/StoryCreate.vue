@@ -16,7 +16,7 @@
       <VueEditor v-model="content" />
       <article class="editor-image">
         <img :src="image" alt="" v-if="image" />
-        <button class="create-btn" @click="createStorie">Create</button>
+        <el-button type="success" id="create-btn" @click="createStorie" :disabled="this.$v.$invalid">Create</el-button>
       </article>
     </article>
   </section>
@@ -24,7 +24,8 @@
 
 <script>
 import { VueEditor } from "vue2-editor";
-import { required, minLength, url, alphaNum } from "vuelidate/lib/validators";
+import { required, minLength, url } from "vuelidate/lib/validators";
+import { isAlphaNum } from '../customValidators/storyTitle';
 import { saveStory } from "../services/story";
 import { addStoryToUser } from "../services/user";
 
@@ -47,7 +48,7 @@ export default {
     title: {
       required,
       minLength: minLength(2),
-      alphaNum,
+      isAlphaNum,
     },
     content: {
       required,

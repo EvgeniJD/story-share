@@ -67,6 +67,13 @@
       <p>{{ userEmail }}</p>
       <el-button
         v-if="isInUpdateUserMode"
+        type="danger"
+        class="image-username-cancel-btn"
+        @click="cancelUpdateUserMode"
+        >CANCEL</el-button
+      >
+      <el-button
+        v-if="isInUpdateUserMode"
         type="success"
         class="image-username-add-btn"
         @click="addNameAndImage"
@@ -293,6 +300,9 @@ export default {
     },
     onAddInspiration() {
       this.isInUpdateInspirationMode = true;
+    },
+    cancelUpdateUserMode() {
+      this.isInUpdateUserMode = false;
     }
   },
   validations: {

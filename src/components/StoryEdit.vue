@@ -16,7 +16,7 @@
       <VueEditor v-model="content" />
       <article class="editor-image">
         <img :src="image" alt="" v-if="image" />
-        <button class="create-btn" @click="onUpdate">Update</button>
+        <el-button id="edit-button" type="success" class="create-btn" @click="onUpdate" :disabled="this.$v.$invalid">Update</el-button>
       </article>
     </article>
   </section>
@@ -24,7 +24,8 @@
 
 <script>
 import { VueEditor } from "vue2-editor";
-import { required, minLength, url, alphaNum } from "vuelidate/lib/validators";
+import { required, minLength, url } from "vuelidate/lib/validators";
+import { isAlphaNum } from '../customValidators/storyTitle';
 import { getStory, updateStory } from "../services/story";
 import { addStoryToUser, deleteStoryFromUser } from "../services/user";
 
@@ -40,7 +41,7 @@ export default {
       initialStory: null,
     };
   },
-  async mounted() {
+  async created() {
     const storyID = this.$route.params.id;
 
     try {
@@ -64,7 +65,7 @@ export default {
     title: {
       required,
       minLength: minLength(2),
-      alphaNum,
+      isAlphaNum,
     },
     content: {
       required,

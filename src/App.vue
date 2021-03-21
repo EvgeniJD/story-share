@@ -44,7 +44,7 @@ export default {
       this.chosenMethod = method;
     },
   },
-  mounted() {
+  created() {
     const res = firebase.auth().currentUser;
 
     if (res) {

@@ -19,7 +19,7 @@ export default {
       stories: [],
     };
   },
-  mounted() {
+  created() {
     // getStories().then((data) => {
     //   console.log(data);
     // })

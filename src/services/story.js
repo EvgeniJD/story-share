@@ -18,3 +18,15 @@ export async function updateStory(storyID, dataToUpdate) {
     return storiesCollection.doc(storyID).update(dataToUpdate);
 }
 
+export async function likeStory(storyID) {
+    return storiesCollection.doc(storyID).update({
+        likes: firebase.firestore.FieldValue.increment(1)
+    });
+}
+
+export async function unlikeStory(storyID) {
+    return storiesCollection.doc(storyID).update({
+        likes: firebase.firestore.FieldValue.increment(-1)
+    });
+}
+

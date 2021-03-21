@@ -200,7 +200,6 @@ h1, h2, h3, h4, h5, h6 {
 
 /* --------------------stories------------------- */
 
-
 .stories {
     display: flex;
     justify-content: space-around;
@@ -230,7 +229,6 @@ h1, h2, h3, h4, h5, h6 {
     text-decoration: none;
 }
 
-
 .stories-story-info {
     display: flex;
     flex-wrap: wrap;
@@ -246,15 +244,13 @@ h1, h2, h3, h4, h5, h6 {
     flex-direction: column;
 }
 
-.stories-story-info-heading h3
- {
+.stories-story-info-heading h3 {
     margin: 0;
     text-align: center;
 }
 
 .stories-story-info-author {
     margin: 3px 0 20px 0;
-
 }
 
 .stories-story-footer {
@@ -305,12 +301,15 @@ h1, h2, h3, h4, h5, h6 {
     align-items: baseline;
 }
 
+.story-details .fa-heart {
+    color: salmon;
+    margin-right: 5px;
+}
+
 .story-details-content {
     display: flex;
     height: 400px;
 }
-
-
 
 .story-details-content article {
     font-size: 18px;
@@ -328,10 +327,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .story-details-content-text {
     flex-basis: 60%;
-    text-align:left;
+    text-align: left;
     overflow-y: scroll;
     padding: 20px;
-    
 }
 
 .story-details-contributers {
@@ -340,14 +338,7 @@ h1, h2, h3, h4, h5, h6 {
     flex-basis: 20%;
 }
 
-#contributors,
-#contributors tr,
-#contributors th,
-#contributors td,
-#proposals,
-#proposals tr,
-#proposals th,
-#proposals td {
+#contributors, #contributors tr, #contributors th, #contributors td, #proposals, #proposals tr, #proposals th, #proposals td {
     background-color: transparent;
 }
 
@@ -371,14 +362,25 @@ h1, h2, h3, h4, h5, h6 {
 
 .story-details-proposals .el-table td {
     padding: 0px;
-} 
+}
 
-.story-details-proposals h2 {
+.story-details-proposals-heading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.story-details-proposals-heading h2 {
     color: rgb(132 132 132);
     font-size: 36px;
     text-align: center;
     background-color: rgba(0, 0, 0, 0.8);
-    margin: 0;
+    margin: 0 10px 0 0;
+}
+
+.story-details-proposals-heading button {
+    font-size: 24px;
+    font-weight: bold;
 }
 
 .table-likes {
@@ -399,9 +401,6 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     justify-content: space-between;
 }
-
-
-
 
 /* --------------------storie details------------------- */
 
@@ -457,35 +456,35 @@ h1, h2, h3, h4, h5, h6 {
 .quillWrapper {
     color: rgb(132 132 132);
     flex-basis: 80%;
+    height: 450px;
 }
 
 .editor-image {
     flex-basis: 20%;
+    position: relative;
 }
 
 .editor-image img {
     width: 100%;
 }
 
-.create-btn {
+#create-btn,
+#edit-button {
     width: 100%;
-    flex-basis: 100%;
-    font-size: 24px;
-    letter-spacing: 1px;
     height: 55px;
+    font-size: 24px;
+    font-weight: bold;
+    flex-basis: 100%;
+    letter-spacing: 1px;
     border-radius: 8px;
     border: none;
-    background: rgb(91 138 118);
     color: white;
-}
-
-.create-btn:hover {
-    cursor: pointer;
+    position: absolute;
+    bottom: -48px;
+    left: 0;
 }
 
 /* --------------------storie create------------------- */
-
-
 
 /* ------------------about------------------ */
 
@@ -519,12 +518,9 @@ h1, h2, h3, h4, h5, h6 {
     color: rgb(91 138 118);
 }
 
-
-
 /* ------------------about------------------ */
 
 /* ------------------profile------------------ */
-
 
 .profile {
     margin: 20px;
@@ -567,10 +563,16 @@ h1, h2, h3, h4, h5, h6 {
     width: 180px;
 }
 
-.profile-img-name-inputs form,
-.profile-img-name-inputs form label {
+.profile-img-name-inputs form, .profile-img-name-inputs form label {
     display: flex;
     flex-direction: column;
+}
+
+.image-username-cancel-btn {
+    position: absolute;
+    bottom: 75px;
+    left: 20px;
+    width: 180px;
 }
 
 .image-username-add-btn {
@@ -599,7 +601,7 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
 }
 
-.profile-data-heading h2{
+.profile-data-heading h2 {
     color: rgb(132 132 132);
 }
 
@@ -610,7 +612,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .carousel-image {
-    object-fit:cover;
+    object-fit: cover;
     height: 100%;
 }
 
@@ -647,7 +649,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .profile-purposes h2 {
     color: rgb(132 132 132);
-    
 }
 
 .profile-purposes ul {
@@ -677,7 +678,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .profile-purposes-item img {
     width: 50px;
-} 
+}
 
 .profile-purposes-item p {
     margin-left: 10px;
@@ -685,9 +686,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ------------------profile------------------ */
 
-
 /* ------------------footer------------------ */
-
 
 .footer {
     text-align: center;
@@ -710,7 +709,7 @@ h1, h2, h3, h4, h5, h6 {
 /* -------------------error page-------------------- */
 
 .err-page {
-    color:rgb(132 132 132);
+    color: rgb(132 132 132);
     margin: 50px auto;
     display: flex;
     flex-direction: column;
