@@ -14,3 +14,7 @@ export async function deleteStory(storyID) {
     return storiesCollection.doc(storyID).delete();
 }
 
+export async function updateStory(storyID, dataToUpdate) {
+    return storiesCollection.doc(storyID).update(dataToUpdate);
+}
+

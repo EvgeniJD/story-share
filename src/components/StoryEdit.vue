@@ -16,7 +16,7 @@
       <VueEditor v-model="content" />
       <article class="editor-image">
         <img :src="image" alt="" v-if="image" />
-        <button class="create-btn" @click="updateStory">Update</button>
+        <button class="create-btn" @click="onUpdate">Update</button>
       </article>
     </article>
   </section>
@@ -25,8 +25,8 @@
 <script>
 import { VueEditor } from "vue2-editor";
 import { required, minLength, url, alphaNum } from "vuelidate/lib/validators";
-import { saveStory, getStory } from "../services/story";
-import { addStoryToUser } from "../services/user";
+import { getStory, updateStory } from "../services/story";
+import { addStoryToUser, deleteStoryFromUser } from "../services/user";
 
 export default {
   components: {
@@ -37,6 +37,7 @@ export default {
       image: "",
       title: "",
       content: "",
+      initialStory: null,
     };
   },
   async mounted() {
@@ -46,6 +47,7 @@ export default {
       const storyResponse = await getStory(storyID);
       const currStory = storyResponse.data();
       console.log("CURR STORY: ", currStory);
+      this.initialStory = currStory;
       this.image = currStory.image;
       this.title = currStory.title;
       this.content = currStory.content;
@@ -70,37 +72,52 @@ export default {
     },
   },
   methods: {
-    async updateStory() {
-      const currUser = this.$store.getters.getUser;
+    async onUpdate() {
+      const confirmResult = window.confirm("Do you really want to update this story?");
 
-      const story = {
+      if(confirmResult) {
+        const currUser = this.$store.getters.getUser;
+
+      const id = this.$route.params.id;
+
+      const initialInfo = {
+        image: this.initialStory.image,
+        id,
+      };
+
+      const dataToUpdate = {
         image: this.image,
         content: this.content,
         title: this.title,
-        proposals: [],
-        contributors: [],
-        initiator: { displayName: currUser.displayName, uid: currUser.uid },
-        created: new Date().toLocaleDateString(),
-        likes: 0,
       };
 
       try {
-        const savedStory = await saveStory(story);
-        console.log("SAVED STORY IS: ", savedStory);
+        const res = await updateStory(id, dataToUpdate);
+        console.log("UPDATED: ", res);
 
-        const storyInfo = {
-          image: this.image,
-          id: savedStory.id,
-        };
+        if (this.initialStory.image !== this.image) {
+          const deleteRes = await deleteStoryFromUser(
+            currUser.uid,
+            initialInfo
+          );
+          console.log("deleteRes: ", deleteRes);
 
-        const updatedInfo = await addStoryToUser(currUser.uid, storyInfo);
-        console.log("UPDATED INFO", updatedInfo);
+          const storyInfo = {
+            image: this.image,
+            id,
+          };
+
+          const updatedInfo = await addStoryToUser(currUser.uid, storyInfo);
+          console.log("UPDATED INFO", updatedInfo);
+        }
+
+        this.$router.push({ name: 'Stories' });
+
       } catch (e) {
         console.log(e);
         alert(e.message);
       }
-
-      // storiesCollection.doc('u7Zrulemh5fAcUD3ZUop').delete().then((res) => { console.log(res); console.log("Deleted"); }).catch((e) => { console.log(e);})
+      }
     },
   },
 };
