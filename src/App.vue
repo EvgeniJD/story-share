@@ -15,12 +15,12 @@
 </template>
 
 <script>
-import Header from "./components/Header.vue";
+import Header from "./components/Core/Header.vue";
 // import Register from './components/Register.vue';
 // import Login from './components/Login.vue';
 // import Stories from './components/Stories.vue';
 // import StoryDetails from './components/StoryDetails.vue';
-import Footer from "./components/Footer.vue";
+import Footer from "./components/Core/Footer.vue";
 
 import firebase from "firebase/app";
 

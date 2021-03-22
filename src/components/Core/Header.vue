@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { logoutUser, getCurrentUser } from "../services/user";
+import { logoutUser, getCurrentUser } from "../../services/user";
 export default {
   methods: {
     async logout() {

@@ -25,9 +25,9 @@
 <script>
 import { VueEditor } from "vue2-editor";
 import { required, minLength, url } from "vuelidate/lib/validators";
-import { isAlphaNum } from '../customValidators/storyTitle';
-import { saveStory } from "../services/story";
-import { addStoryToUser } from "../services/user";
+import { isAlphaNum } from '../../customValidators/storyTitle';
+import { saveStory } from "../../services/story";
+import { addStoryToUser } from "../../services/user";
 
 export default {
   components: {

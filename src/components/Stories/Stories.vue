@@ -7,7 +7,7 @@
 
 <script>
 // import { getStories } from "../services/story.js";
-import { storiesCollection } from "../firebase";
+import { storiesCollection } from "../../firebase";
 import Story from "./Story.vue";
 
 export default {

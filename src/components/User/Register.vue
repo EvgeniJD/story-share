@@ -80,9 +80,7 @@
 </template>
 
 <script>
-import firebase from "firebase/app";
-import { registerUser, setUserToDB } from "../services/user";
-// import usersCollection from '../firebase';
+import { registerUser, setUserToDB } from "../../services/user";
 
 import {
   required,
@@ -129,9 +127,10 @@ export default {
   methods: {
     async register() {
       try {
-        await registerUser(this.formData.email, this.formData.password);
+        const authRes = await registerUser(this.formData.email, this.formData.password);
+        console.log('Authentication Response: ', authRes);
 
-        const userCredentials = firebase.auth().currentUser;
+        const userCredentials = authRes.user;
         const currUser = {
           ...userCredentials.providerData[0],
           uid: userCredentials.uid,
@@ -146,6 +145,7 @@ export default {
           proposals: [],
           stories: [],
           inspirations: [],
+          storiesLiked: []
         };
 
         await setUserToDB(newUserToDB);
@@ -153,8 +153,8 @@ export default {
         this.$router.push({ name: "Stories" });
         
       } catch (e) {
-        console.log(e);
-        alert(e.message);
+        console.log('REGISTER ERROR: ', e);
+        alert(`REGISTER ERROR: ${e.message}`);
       }
 
       // const user = firebase.auth().currentUser;

@@ -7,14 +7,14 @@ export async function registerUser(email, password) {
         .createUserWithEmailAndPassword(
             email,
             password
-        )
-        .then((res) => {
-            console.log("USER IS: ", res.user);
-        })
-        .catch((e) => {
-            console.log("Oops: ", e);
-            alert(e.message);
-        });
+        );
+        // .then((res) => {
+        //     console.log("USER IS: ", res.user);
+        // })
+        // .catch((e) => {
+        //     console.log("Oops: ", e);
+        //     alert(e.message);
+        // });
 
 }
 
@@ -108,4 +108,12 @@ export async function getUserData(userID) {
        console.log(e);
        alert(e.message);
    })
+}
+
+export function addProposalToUser(userID, proposal) {
+    const userRef = firebase.firestore().collection("users").doc(userID);
+
+    return userRef.update({
+        proposals: firebase.firestore.FieldValue.arrayUnion(proposal)
+    });
 }

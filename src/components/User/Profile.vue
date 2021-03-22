@@ -137,7 +137,7 @@
 
 <script>
 import { required, minLength, maxLength, url } from "vuelidate/lib/validators";
-import { updateUserInfo, getCurrentUser } from "../services/user.js";
+import { updateUserInfo, getCurrentUser } from "../../services/user.js";
 
 export default {
   data() {

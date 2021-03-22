@@ -30,3 +30,11 @@ export async function unlikeStory(storyID) {
     });
 }
 
+export function addProposalToStory(storyID, proposal) {
+    const storyRef = storiesCollection.doc(storyID);
+
+    return storyRef.update({
+        proposals: firebase.firestore.FieldValue.arrayUnion(proposal)
+    })
+}
+

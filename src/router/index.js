@@ -1,18 +1,18 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import About from '../components/About.vue';
-import StoriesWrapper from '../components/StoriesWrapper.vue';
-import Stories from '../components/Stories.vue';
-import StoryDetails from '../components/StoryDetails.vue';
-import StoryCreate from '../components/StoryCreate.vue';
-import StoryEdit from '../components/StoryEdit.vue';
-import StoryAddProposal from '../components/StoryAddProposal.vue';
-import User from '../components/User.vue';
-import Login from '../components/Login.vue';
-import Register from '../components/Register.vue';
-import Profile from '../components/Profile.vue';
-import NotFound from '../components/NotFound.vue';
+import About from '../components/Core/About.vue';
+import StoriesWrapper from '../components/Stories/StoriesWrapper.vue';
+import Stories from '../components/Stories/Stories.vue';
+import StoryDetails from '../components/Stories/StoryDetails.vue';
+import StoryCreate from '../components/Stories/StoryCreate.vue';
+import StoryEdit from '../components/Stories/StoryEdit.vue';
+import StoryAddProposal from '../components/Stories/StoryAddProposal.vue';
+import User from '../components/User/User.vue';
+import Login from '../components/User/Login.vue';
+import Register from '../components/User/Register.vue';
+import Profile from '../components/User/Profile.vue';
+import NotFound from '../components/Core/NotFound.vue';
 
 import { getCurrentUser } from '../services/user';
 

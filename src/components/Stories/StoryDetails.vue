@@ -76,7 +76,7 @@
         max-height="400"
         id="proposals"
       >
-        <el-table-column label="Username" prop="username" width="150">
+        <el-table-column label="Author email" prop="authorEmail" width="150">
         </el-table-column>
 
         <el-table-column label="Likes">
@@ -90,12 +90,11 @@
 
         <el-table-column type="expand" label="Review Content" width="150">
           <template slot-scope="props">
-            <textarea
-              :readonly="!isAuthor"
-              v-model="props.row.content"
+            <p
+              v-html="props.row.content"
               class="proposials-table-textarea"
             >
-            </textarea>
+            </p>
 
             <article class="buttons-cta">
               <article class="proposials-table-not-user-cta" v-if="!isAuthor">
@@ -144,13 +143,13 @@
 </template>
 
 <script>
-import { getStory, deleteStory, likeStory, unlikeStory } from "../services/story";
+import { getStory, deleteStory, likeStory, unlikeStory } from "../../services/story";
 import {
   deleteStoryFromUser,
   addLikedStoryToUser,
   removeLikedStoryFromUser,
   getUserData,
-} from "../services/user";
+} from "../../services/user";
 
 export default {
   data() {
