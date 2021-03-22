@@ -65,10 +65,10 @@
 
     <article class="story-details-proposals" v-if="story.proposals">
       <article class="story-details-proposals-heading">
-      <h2>Proposals</h2>
-      <router-link :to="`/stories/add-proposal/${this.$route.params.id}`">
-      <el-button type="success">+</el-button>
-      </router-link>
+        <h2>Proposals</h2>
+        <router-link :to="`/stories/add-proposal/${this.$route.params.id}`">
+          <el-button type="success">+</el-button>
+        </router-link>
       </article>
       <el-table
         :data="story.proposals"
@@ -90,11 +90,7 @@
 
         <el-table-column type="expand" label="Review Content" width="150">
           <template slot-scope="props">
-            <p
-              v-html="props.row.content"
-              class="proposials-table-textarea"
-            >
-            </p>
+            <p v-html="props.row.content" class="proposials-table-textarea"></p>
 
             <article class="buttons-cta">
               <article class="proposials-table-not-user-cta" v-if="!isAuthor">
@@ -117,6 +113,7 @@
                   >Delete</el-button
                 >
               </article>
+
               <article
                 class="proposials-table-initiator-cta"
                 v-if="isInitiator"
@@ -124,13 +121,13 @@
                 <el-button
                   size="mini"
                   type="success"
-                  @click="handleEdit(scope.$index, scope.row)"
+                  @click="handleMergeProposal(scope.$index, scope.row)"
                   >Merge</el-button
                 >
                 <el-button
                   size="mini"
                   type="danger"
-                  @click="handleDelete(scope.$index, scope.row)"
+                  @click="handleDeleteProposal(scope.$index, scope.row)"
                   >Delete</el-button
                 >
               </article>
@@ -143,7 +140,12 @@
 </template>
 
 <script>
-import { getStory, deleteStory, likeStory, unlikeStory } from "../../services/story";
+import {
+  getStory,
+  deleteStory,
+  likeStory,
+  unlikeStory,
+} from "../../services/story";
 import {
   deleteStoryFromUser,
   addLikedStoryToUser,
@@ -154,20 +156,20 @@ import {
 export default {
   data() {
     return {
-      isAuthor: true,
+      isAuthor: false,
       story: {},
       //throw me an error if i use story.initiator.displayName !!!
       initiatorDisplayName: "",
       storyInitiatorID: "",
       userData: null,
       isLiked: false,
-      isInitiator: false
+      isInitiator: false,
     };
   },
   methods: {
-    handleEdit(index, row) {
-      console.log("Index: ", index);
-      console.log("Row: ", row);
+    handleMergeProposal() {
+      // console.log("Index: ", index);
+      // console.log("Row: ", row);
     },
     async handleInitiatorDelete() {
       const confirmResult = window.confirm(
@@ -203,7 +205,7 @@ export default {
         await addLikedStoryToUser(user.uid, storyID);
         this.story.likes += 1;
         this.isLiked = true;
-        this.$store.commit('setCurrStory', this.story);
+        this.$store.commit("setCurrStory", this.story);
       } catch (e) {
         console.log(e);
         alert(e.message);
@@ -218,7 +220,7 @@ export default {
         await removeLikedStoryFromUser(user.uid, storyID);
         this.story.likes -= 1;
         this.isLiked = false;
-        this.$store.commit('setCurrStory', this.story);
+        this.$store.commit("setCurrStory", this.story);
       } catch (e) {
         console.log(e);
         alert(e.message);
@@ -232,9 +234,9 @@ export default {
 
     try {
       userData = await getUserData(user.uid);
-      console.log('USERDATA ', userData);
+      console.log("USERDATA ", userData);
       this.userData = userData;
-      if(userData.storiesLiked.includes(storyID)) {
+      if (userData.storiesLiked.includes(storyID)) {
         this.isLiked = true;
       }
       this.$store.commit("setUserData", userData);
@@ -248,7 +250,7 @@ export default {
       this.story = currStory.data();
       this.initiatorDisplayName = this.story.initiator.displayName;
       this.storyInitiatorID = this.story.initiator.uid;
-      if(this.storyInitiatorID === user.uid) {
+      if (this.storyInitiatorID === user.uid) {
         this.isInitiator = true;
       }
       this.$store.commit("setCurrStory", this.story);
