@@ -8,14 +8,6 @@ export async function registerUser(email, password) {
             email,
             password
         );
-        // .then((res) => {
-        //     console.log("USER IS: ", res.user);
-        // })
-        // .catch((e) => {
-        //     console.log("Oops: ", e);
-        //     alert(e.message);
-        // });
-
 }
 
 export async function updateUserInfo(username, imageURL) {
@@ -32,7 +24,7 @@ export async function updateUserInfo(username, imageURL) {
     });
 }
 
-export function getCurrentUser() {
+export function getCurrentAuthUser() {
     return firebase.auth().currentUser;
 }
 
@@ -117,3 +109,12 @@ export function addProposalToUser(userID, proposal) {
         proposals: firebase.firestore.FieldValue.arrayUnion(proposal)
     });
 }
+
+export function removeProposalFromUser(userID, proposal) {
+    const userRef = firebase.firestore().collection("users").doc(userID);
+
+    return userRef.update({
+        proposals: firebase.firestore.FieldValue.arrayRemove(proposal)
+    });
+}
+

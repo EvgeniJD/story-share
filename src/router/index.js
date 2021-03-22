@@ -14,7 +14,7 @@ import Register from '../components/User/Register.vue';
 import Profile from '../components/User/Profile.vue';
 import NotFound from '../components/Core/NotFound.vue';
 
-import { getCurrentUser } from '../services/user';
+import { getCurrentAuthUser } from '../services/user';
 
 
 Vue.use(VueRouter)
@@ -96,7 +96,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    const currUser = getCurrentUser();
+    const currUser = getCurrentAuthUser();
 
     if (
         currUser == null &&

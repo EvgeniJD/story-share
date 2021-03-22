@@ -38,3 +38,21 @@ export function addProposalToStory(storyID, proposal) {
     })
 }
 
+export function removeProposalFromStory(storyID, proposal) {
+    const storyRef = storiesCollection.doc(storyID);
+
+    return storyRef.update({
+        proposals: firebase.firestore.FieldValue.arrayRemove(proposal)
+    })
+}
+
+export function addContributer(storyID, contributorEmail) {
+    const storyRef = storiesCollection.doc(storyID);
+
+    return storyRef.update({
+        contributors: firebase.firestore.FieldValue.arrayUnion(contributorEmail)
+    })
+}
+
+
+

@@ -120,7 +120,7 @@
     </article>
 
     <article class="profile-purposes">
-      <h2>My last purposals</h2>
+      <h2>My last proposals</h2>
       <ul>
         <li v-for="(purpose, i) in myPurposes" :key="i">
           <a href="">
@@ -137,7 +137,7 @@
 
 <script>
 import { required, minLength, maxLength, url } from "vuelidate/lib/validators";
-import { updateUserInfo, getCurrentUser } from "../../services/user.js";
+import { updateUserInfo, getCurrentAuthUser } from "../../services/user.js";
 
 export default {
   data() {
@@ -286,7 +286,7 @@ export default {
       let res = null;
       try {
         await updateUserInfo(this.formData.username, this.formData.imageURL);
-        res = getCurrentUser();
+        res = getCurrentAuthUser();
         const currUser = { ...res.providerData[0], uid: res.uid };
         this.$store.commit("setUser", currUser);
         this.isInUpdateUserMode = false;

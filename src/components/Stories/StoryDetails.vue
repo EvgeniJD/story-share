@@ -21,22 +21,21 @@
         class="story-details-content-text"
       ></article>
 
-      <article class="story-details-contributers" v-if="story.contributors">
+      <article class="story-details-contributers" >
         <h3>Contributors</h3>
         <el-table
-          :data="story.contributors"
+          :data="contributors"
           style="width: 100%"
           height="340"
           id="contributors"
         >
-          <el-table-column prop="username" label="Username" width="120">
+          <el-table-column prop="email" label="Email" width="240">
           </el-table-column>
-          <el-table-column
-            prop="contributions"
+          <!-- <el-table-column
             label="Contributions"
-            width="120"
+            width="100"
           >
-          </el-table-column>
+          </el-table-column> -->
         </el-table>
       </article>
     </article>
@@ -63,79 +62,11 @@
       ></el-button>
     </article>
 
-    <article class="story-details-proposals" v-if="story.proposals">
-      <article class="story-details-proposals-heading">
-        <h2>Proposals</h2>
-        <router-link :to="`/stories/add-proposal/${this.$route.params.id}`">
-          <el-button type="success">+</el-button>
-        </router-link>
-      </article>
-      <el-table
-        :data="story.proposals"
-        style="width: 100%"
-        max-height="400"
-        id="proposals"
-      >
-        <el-table-column label="Author email" prop="authorEmail" width="150">
-        </el-table-column>
+    <StoryDetailsProposals
+    :story="story"
+    @mergeProposal="mergeProposal"
+    />
 
-        <el-table-column label="Likes">
-          <template slot-scope="props">
-            <div class="table-likes">
-              <i class="fas fa-heart"></i>
-              <p>{{ props.row.likes }}</p>
-            </div>
-          </template>
-        </el-table-column>
-
-        <el-table-column type="expand" label="Review Content" width="150">
-          <template slot-scope="props">
-            <p v-html="props.row.content" class="proposials-table-textarea"></p>
-
-            <article class="buttons-cta">
-              <article class="proposials-table-not-user-cta" v-if="!isAuthor">
-                <el-button type="success" size="mini" v-if="!isLiked">
-                  Like
-                </el-button>
-                <el-button type="danger" size="mini" v-else> Unlike </el-button>
-              </article>
-
-              <article class="proposials-table-user-cta" v-if="isAuthor">
-                <el-button
-                  size="mini"
-                  @click="handleEdit(scope.$index, scope.row)"
-                  >Edit</el-button
-                >
-                <el-button
-                  size="mini"
-                  type="danger"
-                  @click="handleDelete(scope.$index, scope.row)"
-                  >Delete</el-button
-                >
-              </article>
-
-              <article
-                class="proposials-table-initiator-cta"
-                v-if="isInitiator"
-              >
-                <el-button
-                  size="mini"
-                  type="success"
-                  @click="handleMergeProposal(scope.$index, scope.row)"
-                  >Merge</el-button
-                >
-                <el-button
-                  size="mini"
-                  type="danger"
-                  @click="handleDeleteProposal(scope.$index, scope.row)"
-                  >Delete</el-button
-                >
-              </article>
-            </article>
-          </template>
-        </el-table-column>
-      </el-table>
-    </article>
   </article>
 </template>
 
@@ -146,6 +77,7 @@ import {
   likeStory,
   unlikeStory,
 } from "../../services/story";
+
 import {
   deleteStoryFromUser,
   addLikedStoryToUser,
@@ -153,7 +85,12 @@ import {
   getUserData,
 } from "../../services/user";
 
+import StoryDetailsProposals from './StoryDetailsProposals' 
+
 export default {
+  components: {
+    StoryDetailsProposals
+  },
   data() {
     return {
       isAuthor: false,
@@ -166,11 +103,30 @@ export default {
       isInitiator: false,
     };
   },
+  computed: {
+    contributors() {
+      if(this.story.contributors) {
+        return this.story.contributors.reduce((acc, email) => {
+          return acc.concat({email});
+        }, [])
+      } else {
+        return [{email: 'No Data'}];
+      }
+    }
+  },
   methods: {
-    handleMergeProposal() {
-      // console.log("Index: ", index);
-      // console.log("Row: ", row);
+    mergeProposal(updatedStory, udpadedUserData) {
+      this.story = updatedStory.data();
+      console.log('UDPADED STORY: ', this.story);
+      this.$store.commit('setCurrStory', updatedStory);
+
+      this.userData = udpadedUserData;
+      this.$store.commit('setUserData', udpadedUserData);
     },
+    //  handlemergeProposal(index, row) {
+    //   console.log("Index: ", index);
+    //   console.log("Row: ", row);
+    // },
     async handleInitiatorDelete() {
       const confirmResult = window.confirm(
         "Do you really want to delete this story?"
@@ -234,7 +190,6 @@ export default {
 
     try {
       userData = await getUserData(user.uid);
-      console.log("USERDATA ", userData);
       this.userData = userData;
       if (userData.storiesLiked.includes(storyID)) {
         this.isLiked = true;
@@ -248,6 +203,7 @@ export default {
     try {
       const currStory = await getStory(storyID);
       this.story = currStory.data();
+      console.log('STORY', this.story);
       this.initiatorDisplayName = this.story.initiator.displayName;
       this.storyInitiatorID = this.story.initiator.uid;
       if (this.storyInitiatorID === user.uid) {

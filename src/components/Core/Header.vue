@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { logoutUser, getCurrentUser } from "../../services/user";
+import { logoutUser, getCurrentAuthUser } from "../../services/user";
 export default {
   methods: {
     async logout() {
@@ -66,7 +66,7 @@ export default {
       }
     },
     showUser() {
-      console.log(getCurrentUser());
+      console.log(getCurrentAuthUser());
     },
   },
   computed: {
