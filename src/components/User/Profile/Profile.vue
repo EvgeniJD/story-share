@@ -1,148 +1,38 @@
 <template>
   <section class="profile">
-    <article class="profile-img-name">
-      <img :src="formData.imageURL || userImage" alt="" />
-      <h4>{{ formData.username || userUsername }}</h4>
+    <ImageName
+      :userEmail="userEmail"
+      :userImage="userImage"
+      :userUsername="userUsername"
+      @addNameAndImage="addNameAndImage"
+    />
 
-      <article class="profile-img-name-inputs" v-if="isInUpdateUserMode">
-        <form>
-          <label for="username">
-            Username:
-            <input
-              type="text"
-              v-model="$v.formData.username.$model"
-              name="username"
-              :class="{ error: this.$v.formData.username.$error }"
-            />
-          </label>
+    <Stories :myStories="myStories" />
 
-          <div class="err-msg-wrapper" v-if="this.$v.formData.username.$error">
-            <i class="fas fa-exclamation-triangle"></i>
-            <p
-              class="err-msg err-mini"
-              v-if="!this.$v.formData.username.required"
-            >
-              Username is required!
-            </p>
-            <p
-              class="err-msg err-mini"
-              v-if="!this.$v.formData.username.minLength"
-            >
-              Username should contain at least
-              {{ this.$v.formData.username.$params.minLength.min }} symbols!
-            </p>
-            <p
-              class="err-msg err-mini"
-              v-if="!this.$v.formData.username.maxLength"
-            >
-              Username should contain maximum
-              {{ this.$v.formData.username.$params.maxLength.max }} symbols!
-            </p>
-          </div>
+    <Inspirations :myInspirations="myInspirations" />
 
-          <label for="image-url">
-            Image URL:
-            <input
-              type="text"
-              v-model="$v.formData.imageURL.$model"
-              name="image-url"
-              :class="{ error: this.$v.formData.imageURL.$error }"
-            />
-          </label>
-
-          <div class="err-msg-wrapper" v-if="this.$v.formData.imageURL.$error">
-            <i class="fas fa-exclamation-triangle"></i>
-            <p
-              class="err-msg err-mini"
-              v-if="!this.$v.formData.imageURL.required"
-            >
-              ImageURL is required!
-            </p>
-            <p class="err-msg err-mini" v-if="!this.$v.formData.imageURL.url">
-              Username should be a valid URL!
-            </p>
-          </div>
-        </form>
-      </article>
-      <p>{{ userEmail }}</p>
-      <el-button
-        v-if="isInUpdateUserMode"
-        type="danger"
-        class="image-username-cancel-btn"
-        @click="cancelUpdateUserMode"
-        >CANCEL</el-button
-      >
-      <el-button
-        v-if="isInUpdateUserMode"
-        type="success"
-        class="image-username-add-btn"
-        @click="addNameAndImage"
-        :disabled="this.$v.formData.$invalid"
-        >ADD</el-button
-      >
-      <el-button
-        v-else
-        type="success"
-        class="image-username-add-btn"
-        @click="toUpdateUserMode"
-        >Update Profile info</el-button
-      >
-    </article>
-    <article class="profile-stories">
-      <article class="profile-data-heading">
-        <h2>My stories</h2>
-        <router-link to="/stories/create">
-          <el-button type="success" size="mini" class="profile-mini-add-btn">
-          +
-        </el-button>
-        </router-link>
-      </article>
-      <el-carousel :interval="4000" height="300px" indicator-position="outside">
-        <el-carousel-item v-for="(story, i) in myStories" :key="i">
-          <img :src="story.image" alt="" class="carousel-image" />
-        </el-carousel-item>
-      </el-carousel>
-    </article>
-
-    <article class="profile-inspirations">
-      <article class="profile-data-heading">
-        <h2>My inspirations</h2>
-        <el-button type="success" size="mini" class="profile-mini-add-btn" @click="onAddInspiration">
-          +
-        </el-button>
-      </article>
-
-      <el-carousel :interval="4000" height="300px" indicator-position="outside" v-if="!isInUpdateInspirationMode">
-        <el-carousel-item v-for="(img, i) in inspirations" :key="i">
-          <img :src="img" alt="" class="carousel-image" />
-        </el-carousel-item>
-      </el-carousel>
-    </article>
-
-    <article class="profile-purposes">
-      <h2>My last proposals</h2>
-      <ul>
-        <li v-for="(purpose, i) in myPurposes" :key="i">
-          <a href="">
-            <article class="profile-purposes-item">
-              <img :src="purpose.storyImage" alt="" />
-              <p>{{ purpose.storyTitle }}</p>
-            </article>
-          </a>
-        </li>
-      </ul>
-    </article>
+    <Proposals :myProposals="myProposals" />
   </section>
 </template>
 
 <script>
-import { required, minLength, maxLength, url } from "vuelidate/lib/validators";
-import { updateUserInfo, getCurrentAuthUser } from "../../services/user.js";
+import ImageName from "./ImageName.vue";
+import Stories from './Stories.vue';
+import Inspirations from './Inspirations.vue';
+import Proposals from './Proposals.vue';
+
+import { updateUserInfo, getCurrentAuthUser } from "../../../services/user.js";
 
 export default {
+  components: {
+    ImageName,
+    Stories,
+    Inspirations,
+    Proposals
+  },
   data() {
     return {
-      inspirations: [
+      myInspirations: [
         "https://images.penguinrandomhouse.com/cover/9780553288100",
         "https://images.penguinrandomhouse.com/cover/9780553299496",
         "https://d3525k1ryd2155.cloudfront.net/h/263/094/1112094263.0.x.jpg",
@@ -230,10 +120,9 @@ export default {
           id: 1,
         },
       ],
-      myPurposes: [
+      myProposals: [
         {
-          storyTitle:
-            "Three little pigs",
+          storyTitle: "Three little pigs",
           storyImage:
             "https://assets-2.placeit.net/smart_templates/e639b9513adc63d37ee4f577433b787b/assets/wn5u193mcjesm2ycxacaltq8jdu68kmu.jpg",
         },
@@ -273,78 +162,44 @@ export default {
             "https://assets-2.placeit.net/smart_templates/e639b9513adc63d37ee4f577433b787b/assets/wn5u193mcjesm2ycxacaltq8jdu68kmu.jpg",
         },
       ],
-      formData: {
-        username: "",
-        imageURL: "",
-      },
-      isInUpdateUserMode: false,
-      isInUpdateInspirationMode: false,
     };
   },
   methods: {
-    async addNameAndImage() {
-      let res = null;
+    async addNameAndImage({ username, imageURL }) {
       try {
-        await updateUserInfo(this.formData.username, this.formData.imageURL);
-        res = getCurrentAuthUser();
-        const currUser = { ...res.providerData[0], uid: res.uid };
+        await updateUserInfo(username, imageURL);
+        const user = getCurrentAuthUser();
+        const currUser = { ...user.providerData[0], uid: user.uid };
         this.$store.commit("setUser", currUser);
-        this.isInUpdateUserMode = false;
       } catch (e) {
         console.log(e);
         alert(e.message);
       }
     },
-    toUpdateUserMode() {
-      this.isInUpdateUserMode = true;
-    },
-    onAddInspiration() {
-      this.isInUpdateInspirationMode = true;
-    },
-    cancelUpdateUserMode() {
-      this.isInUpdateUserMode = false;
-    }
+   
   },
-  validations: {
-    formData: {
-      username: {
-        required,
-        minLength: minLength(3),
-        maxLength: maxLength(25),
-      },
-      imageURL: {
-        required,
-        url,
-      },
-    },
-  },
+
   computed: {
     user() {
-       return this.$store.getters.getUser;
+      return this.$store.getters.getUser;
     },
     userUsername() {
       if (this.user) {
         return this.user.displayName;
       }
-      return null;
+      return "";
     },
     userImage() {
       if (this.user) {
         return this.user.photoURL;
       }
-      return null;
+      return "";
     },
     userEmail() {
       if (this.user) {
         return this.user.email;
       }
-      return null;
-    },
-    isUserDONTHaveUsernameAndImage() {
-      if (this.user) {
-        return !this.user.displayName && !this.user.photoURL;
-      }
-      return false;
+      return "";
     },
   },
 };

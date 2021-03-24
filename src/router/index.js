@@ -11,7 +11,7 @@ import StoryAddProposal from '../components/Stories/StoryAddProposal.vue';
 import User from '../components/User/User.vue';
 import Login from '../components/User/Login.vue';
 import Register from '../components/User/Register.vue';
-import Profile from '../components/User/Profile.vue';
+import Profile from '../components/User/Profile/Profile.vue';
 import NotFound from '../components/Core/NotFound.vue';
 
 import { getCurrentAuthUser } from '../services/user';

@@ -43,9 +43,6 @@ export async function setUserToDB(user) {
 export async function logoutUser() {
     return auth
         .signOut()
-        .then(() => {
-            alert("You are successfully logged out!");
-        })
         .catch((e) => {
             console.log(e);
             alert(e.message);
@@ -89,7 +86,6 @@ export async function getUserData(userID) {
     const userRef = usersCollection.doc(userID);
 
    return userRef.get().then((doc) => {
-       console.log(doc.data());
        return doc.data();
    })
    .catch((e) => {

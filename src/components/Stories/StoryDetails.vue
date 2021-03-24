@@ -171,7 +171,7 @@ export default {
 
     try {
       const currStory = await getStory(storyID);
-      currStory.data();
+      this.story = currStory.data();
       this.initiatorDisplayName = this.story.initiator.displayName || user.displayName;
       this.storyInitiatorID = this.story.initiator.uid;
       if (this.storyInitiatorID === user.uid) {
