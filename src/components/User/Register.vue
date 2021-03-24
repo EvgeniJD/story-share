@@ -68,7 +68,7 @@
         </p>
       </div>
 
-      <button type="submit" :class="{ hover: !this.$v.formData.$invalid }">
+      <button type="submit" :class="{ hover: !this.$v.formData.$invalid }" :disabled="this.$v.formData.$invalid">
         Register
       </button>
     </form>
@@ -96,7 +96,6 @@ export default {
     return {
       formData: {
         email: "",
-        username: "",
         password: "",
         repeatPassword: "",
       },
@@ -107,11 +106,6 @@ export default {
       email: {
         required,
         email,
-      },
-      username: {
-        required,
-        minLength: minLength(3),
-        maxLength: maxLength(25),
       },
       password: {
         required,
@@ -128,7 +122,6 @@ export default {
     async register() {
       try {
         const authRes = await registerUser(this.formData.email, this.formData.password);
-        console.log('Authentication Response: ', authRes);
 
         const userCredentials = authRes.user;
         const currUser = {
@@ -156,21 +149,6 @@ export default {
         console.log('REGISTER ERROR: ', e);
         alert(`REGISTER ERROR: ${e.message}`);
       }
-
-      // const user = firebase.auth().currentUser;
-      // console.log("USER: ",user);
-
-      // user
-      //   .updateProfile({
-      //     displayName: "Evgeni Dimitrov",
-      //     photoURL: "https://scontent.fsof10-1.fna.fbcdn.net/v/t1.0-9/11218786_1122447354449411_3445061230582156527_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=jnfNox2rq3EAX9ccDMS&_nc_oc=AQknA6yEbHrYUbAdnu6zqdTURDeE69dR_8ZKEX8Y3xD2RtRSOTPFCC3csoos2Ev6yHE&_nc_ht=scontent.fsof10-1.fna&oh=32cbe6afcaea15902fa32f1ad1a4c8cb&oe=60785915",
-      //   })
-      //   .then(function (res) {
-      //     console.log('RESPONSE: ', res);
-      //   })
-      //   .catch(function (error) {
-      //     alert(error)
-      //   });
     },
   },
 };

@@ -233,42 +233,42 @@ export default {
       myPurposes: [
         {
           storyTitle:
-            "The red hornet maybe yellow.The red hornet maybe yellow.",
+            "Three little pigs",
           storyImage:
             "https://assets-2.placeit.net/smart_templates/e639b9513adc63d37ee4f577433b787b/assets/wn5u193mcjesm2ycxacaltq8jdu68kmu.jpg",
         },
         {
-          storyTitle: "The red hornet maybe yellow.",
+          storyTitle: "Three little pigs",
           storyImage:
             "https://assets-2.placeit.net/smart_templates/e639b9513adc63d37ee4f577433b787b/assets/wn5u193mcjesm2ycxacaltq8jdu68kmu.jpg",
         },
         {
-          storyTitle: "The red hornet maybe yellow.",
+          storyTitle: "Three little pigs",
           storyImage:
             "https://assets-2.placeit.net/smart_templates/e639b9513adc63d37ee4f577433b787b/assets/wn5u193mcjesm2ycxacaltq8jdu68kmu.jpg",
         },
         {
-          storyTitle: "The red hornet maybe yellow.",
+          storyTitle: "Three little pigs",
           storyImage:
             "https://assets-2.placeit.net/smart_templates/e639b9513adc63d37ee4f577433b787b/assets/wn5u193mcjesm2ycxacaltq8jdu68kmu.jpg",
         },
         {
-          storyTitle: "The red hornet maybe yellow.",
+          storyTitle: "Three little pigs",
           storyImage:
             "https://assets-2.placeit.net/smart_templates/e639b9513adc63d37ee4f577433b787b/assets/wn5u193mcjesm2ycxacaltq8jdu68kmu.jpg",
         },
         {
-          storyTitle: "The red hornet maybe yellow.",
+          storyTitle: "Three little pigs",
           storyImage:
             "https://assets-2.placeit.net/smart_templates/e639b9513adc63d37ee4f577433b787b/assets/wn5u193mcjesm2ycxacaltq8jdu68kmu.jpg",
         },
         {
-          storyTitle: "The red hornet maybe yellow.",
+          storyTitle: "Three little pigs",
           storyImage:
             "https://assets-2.placeit.net/smart_templates/e639b9513adc63d37ee4f577433b787b/assets/wn5u193mcjesm2ycxacaltq8jdu68kmu.jpg",
         },
         {
-          storyTitle: "The red hornet maybe yellow.",
+          storyTitle: "Three little pigs",
           storyImage:
             "https://assets-2.placeit.net/smart_templates/e639b9513adc63d37ee4f577433b787b/assets/wn5u193mcjesm2ycxacaltq8jdu68kmu.jpg",
         },
@@ -320,9 +320,7 @@ export default {
   },
   computed: {
     user() {
-      const user = this.$store.getters.getUser;
-      console.log("FROM profile COMPUTED:", user);
-      return user;
+       return this.$store.getters.getUser;
     },
     userUsername() {
       if (this.user) {

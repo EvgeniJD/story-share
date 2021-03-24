@@ -29,14 +29,14 @@
           <p v-html="props.row.content" class="proposials-table-textarea"></p>
 
           <article class="buttons-cta">
-            <article class="proposials-table-not-user-cta" v-if="!isAuthor">
+            <!-- <article class="proposials-table-not-user-cta" v-if="!isAuthor">
               <el-button type="success" size="mini" v-if="!isLiked">
                 Like
               </el-button>
               <el-button type="danger" size="mini" v-else> Unlike </el-button>
-            </article>
+            </article> -->
 
-            <article class="proposials-table-user-cta" v-if="isAuthor">
+            <!-- <article class="proposials-table-user-cta" v-if="isAuthor">
               <el-button
                 size="mini"
                 @click="handleEdit(props.$index, props.row)"
@@ -48,19 +48,19 @@
                 @click="handleDelete(props.$index, props.row)"
                 >Delete</el-button
               >
-            </article>
+            </article> -->
 
             <article class="proposials-table-initiator-cta" v-if="isInitiator">
               <el-button
                 size="mini"
                 type="success"
-                @click="handlemergeProposal(props.$index, props.row)"
+                @click="handlemergeProposal(props.row)"
                 >Merge</el-button
               >
               <el-button
                 size="mini"
                 type="danger"
-                @click="handleDeleteProposal(props.$index, props.row)"
+                @click="handleDeleteProposal(props.row)"
                 >Delete</el-button
               >
             </article>
@@ -103,8 +103,7 @@ export default {
       console.log("INDEX", index);
       console.log("ROW", row);
     },
-    async handlemergeProposal(index, row) {
-      console.log("INDEX", index);
+    async handlemergeProposal(row) {
       const storyID = this.$route.params.id;
       const user = this.$store.getters.getUser;
       const proposal = { ...row };
@@ -114,7 +113,7 @@ export default {
         await updateStory(storyID, dataToUpdate);
         await removeProposalFromStory(storyID, proposal);
         await removeProposalFromUser(user.uid, proposal);
-        await addContributer(storyID, user.email)
+        await addContributer(storyID, proposal.authorEmail)
         const updatedStory = await getStory(storyID);
         const udpadedUserData = await getUserData(user.uid);
         this.$emit('mergeProposal', updatedStory, udpadedUserData);
@@ -123,9 +122,21 @@ export default {
         alert(e.message);
       }
     },
-    handleDeleteProposal(index, row) {
-      console.log("INDEX", index);
-      console.log("ROW", row);
+    async handleDeleteProposal(row) {
+      const storyID = this.$route.params.id;
+      const user = this.$store.getters.getUser;
+      const proposal = { ...row };
+
+      try {
+        await removeProposalFromStory(storyID, proposal);
+        await removeProposalFromUser(user.uid, proposal);
+        const updatedStory = await getStory(storyID);
+        const udpadedUserData = await getUserData(user.uid);
+        this.$emit('handleDeleteProposal', updatedStory, udpadedUserData);
+      } catch (e) {
+        console.log(e);
+        alert(e.message);
+      }
     },
   },
 };

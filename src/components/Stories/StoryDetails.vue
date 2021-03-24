@@ -7,7 +7,7 @@
         <p class="story-details-header-likes-count">{{ story.likes }}</p>
       </article>
       <p class="story-details-header-initiator">
-        Initiator: {{ initiatorDisplayName }}
+        Initiator: {{ initiatorDisplayName || "No username provided" }}
       </p>
     </article>
 
@@ -21,52 +21,22 @@
         class="story-details-content-text"
       ></article>
 
-      <article class="story-details-contributers" >
-        <h3>Contributors</h3>
-        <el-table
-          :data="contributors"
-          style="width: 100%"
-          height="340"
-          id="contributors"
-        >
-          <el-table-column prop="email" label="Email" width="240">
-          </el-table-column>
-          <!-- <el-table-column
-            label="Contributions"
-            width="100"
-          >
-          </el-table-column> -->
-        </el-table>
-      </article>
+      <StoryDetailsContributors :contributors="contributors" />
     </article>
 
-    <article class="story-details-initiator-cta" v-if="isInitiator">
-      <router-link :to="`/stories/edit/${this.$route.params.id}`">
-        <el-button>Edit</el-button>
-      </router-link>
-      <el-button type="danger" @click="handleInitiatorDelete">Delete</el-button>
-    </article>
-
-    <article
-      class="story-details-initiator-cta"
-      v-if="!isLiked && !isInitiator"
-    >
-      <el-button type="success" @click="onLike"
-        ><i class="fas fa-thumbs-up"></i
-      ></el-button>
-    </article>
-
-    <article class="story-details-initiator-cta" v-if="isLiked && !isInitiator">
-      <el-button type="danger" @click="onUnlike"
-        ><i class="fas fa-thumbs-down"></i
-      ></el-button>
-    </article>
-
-    <StoryDetailsProposals
-    :story="story"
-    @mergeProposal="mergeProposal"
+    <StoryCTA
+      :isInitiator="isInitiator"
+      :isLiked="isLiked"
+      @onLike="onLike"
+      @onUnlike="onUnlike"
+      @handleInitiatorDelete="handleInitiatorDelete"
     />
 
+    <StoryDetailsProposals
+      :story="story"
+      @mergeProposal="updateData"
+      @handleDeleteProposal="updateData"
+    />
   </article>
 </template>
 
@@ -85,11 +55,15 @@ import {
   getUserData,
 } from "../../services/user";
 
-import StoryDetailsProposals from './StoryDetailsProposals' 
+import StoryDetailsProposals from "./StoryDetailsProposals";
+import StoryDetailsContributors from "./StoryDetailsContributors.vue";
+import StoryCTA from "./StoryCTA.vue";
 
 export default {
   components: {
-    StoryDetailsProposals
+    StoryDetailsProposals,
+    StoryDetailsContributors,
+    StoryCTA,
   },
   data() {
     return {
@@ -105,28 +79,23 @@ export default {
   },
   computed: {
     contributors() {
-      if(this.story.contributors) {
-        return this.story.contributors.reduce((acc, email) => {
-          return acc.concat({email});
-        }, [])
+      if (this.story.contributors) {
+        return this.story.contributors.map((email) => {
+          return { email };
+        });
       } else {
-        return [{email: 'No Data'}];
+        return [{ email: "No Data" }];
       }
-    }
+    },
   },
   methods: {
-    mergeProposal(updatedStory, udpadedUserData) {
+    updateData(updatedStory, udpadedUserData) {
       this.story = updatedStory.data();
-      console.log('UDPADED STORY: ', this.story);
-      this.$store.commit('setCurrStory', updatedStory);
+      this.$store.commit("setCurrStory", updatedStory);
 
       this.userData = udpadedUserData;
-      this.$store.commit('setUserData', udpadedUserData);
-    },
-    //  handlemergeProposal(index, row) {
-    //   console.log("Index: ", index);
-    //   console.log("Row: ", row);
-    // },
+      this.$store.commit("setUserData", udpadedUserData);
+    }, 
     async handleInitiatorDelete() {
       const confirmResult = window.confirm(
         "Do you really want to delete this story?"
@@ -202,9 +171,8 @@ export default {
 
     try {
       const currStory = await getStory(storyID);
-      this.story = currStory.data();
-      console.log('STORY', this.story);
-      this.initiatorDisplayName = this.story.initiator.displayName;
+      currStory.data();
+      this.initiatorDisplayName = this.story.initiator.displayName || user.displayName;
       this.storyInitiatorID = this.story.initiator.uid;
       if (this.storyInitiatorID === user.uid) {
         this.isInitiator = true;

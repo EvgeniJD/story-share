@@ -16,36 +16,18 @@
 
 <script>
 import Header from "./components/Core/Header.vue";
-// import Register from './components/Register.vue';
-// import Login from './components/Login.vue';
-// import Stories from './components/Stories.vue';
-// import StoryDetails from './components/StoryDetails.vue';
 import Footer from "./components/Core/Footer.vue";
 
-import firebase from "firebase/app";
+import { getCurrentAuthUser } from './services/user';
 
 export default {
   name: "App",
   components: {
     Header,
-    // Register,
-    // Login,
-    // Stories,
-    // StoryDetails,
     Footer,
   },
-  data() {
-    return {
-      chosenMethod: "Register",
-    };
-  },
-  methods: {
-    switchMethod(method) {
-      this.chosenMethod = method;
-    },
-  },
   created() {
-    const res = firebase.auth().currentUser;
+    const res = getCurrentAuthUser();
 
     if (res) {
       const currUser = {...res.providerData[0], uid: res.uid };

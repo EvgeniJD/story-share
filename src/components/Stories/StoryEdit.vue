@@ -16,7 +16,14 @@
       <VueEditor v-model="content" />
       <article class="editor-image">
         <img :src="image" alt="" v-if="image" />
-        <el-button id="edit-button" type="success" class="create-btn" @click="onUpdate" :disabled="this.$v.$invalid">Update</el-button>
+        <el-button
+          id="edit-button"
+          type="success"
+          class="create-btn"
+          @click="onUpdate"
+          :disabled="this.$v.$invalid"
+          >Update</el-button
+        >
       </article>
     </article>
   </section>
@@ -25,7 +32,7 @@
 <script>
 import { VueEditor } from "vue2-editor";
 import { required, minLength, url } from "vuelidate/lib/validators";
-import { isAlphaNum } from '../../customValidators/storyTitle';
+import { isAlphaNum } from "../../customValidators/storyTitle";
 import { getStory, updateStory } from "../../services/story";
 import { addStoryToUser, deleteStoryFromUser } from "../../services/user";
 
@@ -47,7 +54,6 @@ export default {
     try {
       const storyResponse = await getStory(storyID);
       const currStory = storyResponse.data();
-      console.log("CURR STORY: ", currStory);
       this.initialStory = currStory;
       this.image = currStory.image;
       this.title = currStory.title;
@@ -74,50 +80,48 @@ export default {
   },
   methods: {
     async onUpdate() {
-      const confirmResult = window.confirm("Do you really want to update this story?");
+      const confirmResult = window.confirm(
+        "Do you really want to update this story?"
+      );
 
-      if(confirmResult) {
+      if (confirmResult) {
         const currUser = this.$store.getters.getUser;
 
-      const id = this.$route.params.id;
+        const id = this.$route.params.id;
 
-      const initialInfo = {
-        image: this.initialStory.image,
-        id,
-      };
+        const initialInfo = {
+          image: this.initialStory.image,
+          id,
+        };
 
-      const dataToUpdate = {
-        image: this.image,
-        content: this.content,
-        title: this.title,
-      };
+        const dataToUpdate = {
+          image: this.image,
+          content: this.content,
+          title: this.title,
+        };
 
-      try {
-        const res = await updateStory(id, dataToUpdate);
-        console.log("UPDATED: ", res);
+        try {
+          await updateStory(id, dataToUpdate);
 
-        if (this.initialStory.image !== this.image) {
-          const deleteRes = await deleteStoryFromUser(
-            currUser.uid,
-            initialInfo
-          );
-          console.log("deleteRes: ", deleteRes);
+          if (this.initialStory.image !== this.image) {
+            await deleteStoryFromUser(
+              currUser.uid,
+              initialInfo
+            );
 
-          const storyInfo = {
-            image: this.image,
-            id,
-          };
+            const storyInfo = {
+              image: this.image,
+              id,
+            };
 
-          const updatedInfo = await addStoryToUser(currUser.uid, storyInfo);
-          console.log("UPDATED INFO", updatedInfo);
+            await addStoryToUser(currUser.uid, storyInfo);
+          }
+
+          this.$router.push({ name: "Stories" });
+        } catch (e) {
+          console.log(e);
+          alert(e.message);
         }
-
-        this.$router.push({ name: 'Stories' });
-
-      } catch (e) {
-        console.log(e);
-        alert(e.message);
-      }
       }
     },
   },

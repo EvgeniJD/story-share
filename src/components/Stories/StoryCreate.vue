@@ -65,30 +65,29 @@ export default {
         title: this.title,
         proposals: [],
         contributors: [],
-        initiator: { displayName: currUser.displayName, uid: currUser.uid },
+        initiator: { 
+          displayName: currUser.displayName || currUser.email,
+          uid: currUser.uid
+           },
         created: new Date().toLocaleDateString(),
         likes: 0,
       };
 
       try {
         const savedStory = await saveStory(story);
-        console.log("SAVED STORY IS: ", savedStory);
 
         const storyInfo = {
           image: this.image,
           id: savedStory.id,
         };
 
-        const updatedInfo = await addStoryToUser(currUser.uid, storyInfo);
-        console.log('UPDATED INFO', updatedInfo);
+        await addStoryToUser(currUser.uid, storyInfo);
 
         this.$router.push({name: 'Stories'});
       } catch (e) {
         console.log(e);
         alert(e.message);
       }
-
-      // storiesCollection.doc('u7Zrulemh5fAcUD3ZUop').delete().then((res) => { console.log(res); console.log("Deleted"); }).catch((e) => { console.log(e);})
     },
   },
 };

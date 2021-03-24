@@ -1,13 +1,12 @@
 import firebase from 'firebase/app';
+import { auth, usersCollection } from '../firebase';
 
 export async function registerUser(email, password) {
+    return auth.createUserWithEmailAndPassword(email, password);
+}
 
-    return firebase
-        .auth()
-        .createUserWithEmailAndPassword(
-            email,
-            password
-        );
+export async function loginUser(email, password) {
+    return auth.signInWithEmailAndPassword(email, password);
 }
 
 export async function updateUserInfo(username, imageURL) {
@@ -25,13 +24,11 @@ export async function updateUserInfo(username, imageURL) {
 }
 
 export function getCurrentAuthUser() {
-    return firebase.auth().currentUser;
+    return auth.currentUser;
 }
 
 export async function setUserToDB(user) {
-    return firebase
-        .firestore()
-        .collection("users")
+    return usersCollection
         .doc(user.uid)
         .set(user)
         .then((doc) => {
@@ -44,8 +41,7 @@ export async function setUserToDB(user) {
 }
 
 export async function logoutUser() {
-    return firebase
-        .auth()
+    return auth
         .signOut()
         .then(() => {
             alert("You are successfully logged out!");
@@ -57,7 +53,7 @@ export async function logoutUser() {
 }
 
 export async function addStoryToUser(userID, story) {
-    const userRef = firebase.firestore().collection("users").doc(userID);
+    const userRef = usersCollection.doc(userID);
 
     return userRef.update({
         stories: firebase.firestore.FieldValue.arrayUnion(story)
@@ -65,7 +61,7 @@ export async function addStoryToUser(userID, story) {
 }
 
 export async function deleteStoryFromUser(userID, objToDelete) {
-    const userRef = firebase.firestore().collection("users").doc(userID);
+    const userRef = usersCollection.doc(userID);
 
     return userRef.update({
         stories: firebase.firestore.FieldValue.arrayRemove(objToDelete)
@@ -74,7 +70,7 @@ export async function deleteStoryFromUser(userID, objToDelete) {
 }
 
 export async function addLikedStoryToUser(userID, storyID) {
-    const userRef = firebase.firestore().collection("users").doc(userID);
+    const userRef = usersCollection.doc(userID);
 
     return userRef.update({
         storiesLiked: firebase.firestore.FieldValue.arrayUnion(storyID)
@@ -82,7 +78,7 @@ export async function addLikedStoryToUser(userID, storyID) {
 }
 
 export async function removeLikedStoryFromUser(userID, storyID) {
-    const userRef = firebase.firestore().collection("users").doc(userID);
+    const userRef = usersCollection.doc(userID);
 
     return userRef.update({
         storiesLiked: firebase.firestore.FieldValue.arrayRemove(storyID)
@@ -90,7 +86,7 @@ export async function removeLikedStoryFromUser(userID, storyID) {
 }
 
 export async function getUserData(userID) {
-    const userRef = firebase.firestore().collection("users").doc(userID);
+    const userRef = usersCollection.doc(userID);
 
    return userRef.get().then((doc) => {
        console.log(doc.data());
@@ -103,7 +99,7 @@ export async function getUserData(userID) {
 }
 
 export function addProposalToUser(userID, proposal) {
-    const userRef = firebase.firestore().collection("users").doc(userID);
+    const userRef = usersCollection.doc(userID);
 
     return userRef.update({
         proposals: firebase.firestore.FieldValue.arrayUnion(proposal)
@@ -111,7 +107,7 @@ export function addProposalToUser(userID, proposal) {
 }
 
 export function removeProposalFromUser(userID, proposal) {
-    const userRef = firebase.firestore().collection("users").doc(userID);
+    const userRef = usersCollection.doc(userID);
 
     return userRef.update({
         proposals: firebase.firestore.FieldValue.arrayRemove(proposal)

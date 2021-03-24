@@ -51,7 +51,7 @@ export default {
       const proposal = {
         authorID,
         authorEmail,
-        content: `\n ( ${user.email} ) Start: \n ${this.content} \n ( ${user.email} ) End`,
+        content: `\n ( ${user.email} ) Beginning: \n ${this.content} \n ( ${user.email} ) End`,
         likes: 0,
       }
 

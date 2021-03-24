@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
+import { storiesCollection } from '../firebase';
 
-const storiesCollection = firebase.firestore().collection('stories');
+// const storiesCollection = firebase.firestore().collection('stories');
 
 export async function saveStory(story) {
     return storiesCollection.add(story);

@@ -20,10 +20,6 @@ export default {
     };
   },
   created() {
-    // getStories().then((data) => {
-    //   console.log(data);
-    // })
-
     storiesCollection
       .get()
       .then((querySnapshot) => {
@@ -31,22 +27,12 @@ export default {
           return { id: doc.id, ...doc.data() };
         });
 
-        console.log("LOG FROM GET STORIES: ", documents);
         this.stories = documents;
       })
       .catch((e) => {
         console.log(e);
         alert(e.message);
       });
-
-    // storiesCollection.doc().set({
-    //   content: "San Francisco...",
-    //   created: new Date().toLocaleDateString(),
-    //   image: "https://i.pinimg.com/originals/87/26/ff/8726ff3556a8edb54088c0bf5c48af60.gif",
-    //   initiator: 'Peter',
-    //   likes: 86,
-    //   title: 'My life story',
-    // });
   },
 };
 </script>

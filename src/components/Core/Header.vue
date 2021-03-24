@@ -7,9 +7,6 @@
         <span>Let's make incredible stories together</span>
       </p>
     </router-link>
-
-    <button @click="showUser">Current User</button>
-
     <router-link
       :to="`/user/profile/${user.uid}`"
       class="header-profile hover"
@@ -46,7 +43,7 @@
 </template>
 
 <script>
-import { logoutUser, getCurrentAuthUser } from "../../services/user";
+import { logoutUser } from "../../services/user";
 export default {
   methods: {
     async logout() {
@@ -65,14 +62,11 @@ export default {
         return;
       }
     },
-    showUser() {
-      console.log(getCurrentAuthUser());
-    },
+    
   },
   computed: {
     user() {
       const user = this.$store.getters.getUser;
-      console.log("FROM HEADER COMPUTED:", user);
       return user;
     },
   },

@@ -48,7 +48,11 @@
           {{ this.$v.formData.password.$params.maxLength.max }} symbols!
         </p>
       </div>
-      <button :disabled="this.$v.formData.$invalid" type="submit" :class="{hover: !this.$v.formData.$invalid}">
+      <button
+        :disabled="this.$v.formData.$invalid"
+        type="submit"
+        :class="{ hover: !this.$v.formData.$invalid }"
+      >
         Login
       </button>
     </form>
@@ -60,7 +64,7 @@
 </template>
 
 <script>
-import firebase from "firebase/app";
+import { loginUser } from "../../services/user";
 import {
   required,
   email,
@@ -93,23 +97,19 @@ export default {
     },
   },
   methods: {
-    login() {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(this.formData.email, this.formData.password)
-        .then((res) => {
-
-          const currUser = {...res.user.providerData[0], uid: res.user.uid };
-
-          this.$store.commit('setUser', currUser);
-
-          this.$router.push({name: 'Stories'})
-
-          })
-        .catch((e) => {
-          console.log("Oops: ", e);
-          alert(e.message);
-        });
+    async login() {
+      try {
+        const res = await loginUser(
+          this.formData.email,
+          this.formData.password
+        );
+        const currUser = { ...res.user.providerData[0], uid: res.user.uid };
+        this.$store.commit("setUser", currUser);
+        this.$router.push({ name: "Stories" });
+      } catch (e) {
+        console.log(e);
+        alert(e.message);
+      }
     },
   },
 };
