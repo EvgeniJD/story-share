@@ -18,7 +18,7 @@
 import Header from "./components/Core/Header.vue";
 import Footer from "./components/Core/Footer.vue";
 
-import { getCurrentAuthUser } from './services/user';
+import { getCurrentAuthUser, getUserData } from './services/user';
 
 export default {
   name: "App",
@@ -26,12 +26,16 @@ export default {
     Header,
     Footer,
   },
-  created() {
-    const res = getCurrentAuthUser();
-
-    if (res) {
+  async created() {
+     try {
+      const res = getCurrentAuthUser();
       const currUser = {...res.providerData[0], uid: res.uid };
       this.$store.commit("setUser", currUser);
+      const userData = await getUserData(res.uid);
+      this.$store.commit("setUserData", userData);
+    } catch (e) {
+      console.log(e);
+      alert(e.message);
     }
   },
 };

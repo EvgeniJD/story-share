@@ -9,8 +9,10 @@
       </router-link>
     </article>
     <el-carousel :interval="4000" height="300px" indicator-position="outside">
-      <el-carousel-item v-for="(story, i) in myStories" :key="i">
-        <img :src="story.image" alt="" class="carousel-image" />
+      <el-carousel-item v-for="story in myStories" :key="story.id">
+        <router-link :to="`/stories/${story.id}`">
+          <img :src="story.image" alt="" class="carousel-image" />
+        </router-link>
       </el-carousel-item>
     </el-carousel>
   </article>
@@ -18,9 +20,9 @@
 
 <script>
 export default {
-    props: {
-        myStories: Array
-    }
+  props: {
+    myStories: Array,
+  },
 };
 </script>
 

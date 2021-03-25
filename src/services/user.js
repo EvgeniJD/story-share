@@ -9,6 +9,15 @@ export async function loginUser(email, password) {
     return auth.signInWithEmailAndPassword(email, password);
 }
 
+export async function logoutUser() {
+    return auth
+        .signOut()
+        .catch((e) => {
+            console.log(e);
+            alert(e.message);
+        });
+}
+
 export async function updateUserInfo(username, imageURL) {
     var user = firebase.auth().currentUser;
 
@@ -27,6 +36,8 @@ export function getCurrentAuthUser() {
     return auth.currentUser;
 }
 
+
+
 export async function setUserToDB(user) {
     return usersCollection
         .doc(user.uid)
@@ -40,14 +51,19 @@ export async function setUserToDB(user) {
         });
 }
 
-export async function logoutUser() {
-    return auth
-        .signOut()
-        .catch((e) => {
-            console.log(e);
-            alert(e.message);
-        });
+export async function getUserData(userID) {
+    const userRef = usersCollection.doc(userID);
+
+   return userRef.get().then((doc) => {
+       return doc.data();
+   })
+   .catch((e) => {
+       console.log(e);
+       alert(e.message);
+   })
 }
+
+
 
 export async function addStoryToUser(userID, story) {
     const userRef = usersCollection.doc(userID);
@@ -66,6 +82,8 @@ export async function deleteStoryFromUser(userID, objToDelete) {
     
 }
 
+
+
 export async function addLikedStoryToUser(userID, storyID) {
     const userRef = usersCollection.doc(userID);
 
@@ -82,17 +100,7 @@ export async function removeLikedStoryFromUser(userID, storyID) {
     });
 }
 
-export async function getUserData(userID) {
-    const userRef = usersCollection.doc(userID);
 
-   return userRef.get().then((doc) => {
-       return doc.data();
-   })
-   .catch((e) => {
-       console.log(e);
-       alert(e.message);
-   })
-}
 
 export function addProposalToUser(userID, proposal) {
     const userRef = usersCollection.doc(userID);
@@ -110,3 +118,11 @@ export function removeProposalFromUser(userID, proposal) {
     });
 }
 
+
+export function addInspirationToUser(userID, inspirationURL) {
+    const userRef = usersCollection.doc(userID);
+
+    return userRef.update({
+        inspirations: firebase.firestore.FieldValue.arrayUnion(inspirationURL)
+    });
+}

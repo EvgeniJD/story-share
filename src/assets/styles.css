@@ -605,6 +605,24 @@ h1, h2, h3, h4, h5, h6 {
     margin-left: 50px;
 }
 
+.profile-inspirations-input-wrapper {
+    height: 300px;
+}
+
+.profile-inspirations-input {
+    color: rgb(132 132 132);
+    font-weight: bold;
+}
+
+.profile-inspirations-input input {
+    height: 30px;
+    width: 80%;
+}
+
+.profile-inspirations-add-btn {
+    width: 80%;
+}
+
 .profile-data-heading {
     display: flex;
     align-items: center;
