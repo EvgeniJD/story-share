@@ -72,8 +72,8 @@
 </template>
 
 <script>
-import { updateStory, removeProposalFromStory, addContributer, getStory } from "../../services/story";
-import { removeProposalFromUser, getUserData } from '../../services/user';
+import { updateStory, removeProposalFromStory, addContributer, getStory } from "../../../services/story";
+import { removeProposalFromUser, getUserData } from '../../../services/user';
 
 export default {
   props: {

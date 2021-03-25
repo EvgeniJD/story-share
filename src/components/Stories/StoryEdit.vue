@@ -104,10 +104,7 @@ export default {
           await updateStory(id, dataToUpdate);
 
           if (this.initialStory.image !== this.image) {
-            await deleteStoryFromUser(
-              currUser.uid,
-              initialInfo
-            );
+            await deleteStoryFromUser(currUser.uid, initialInfo);
 
             const storyInfo = {
               image: this.image,
@@ -117,7 +114,7 @@ export default {
             await addStoryToUser(currUser.uid, storyInfo);
           }
 
-          this.$router.push({ name: "Stories" });
+          this.$router.push(`/stories/${id}`);
         } catch (e) {
           console.log(e);
           alert(e.message);

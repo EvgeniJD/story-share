@@ -1,30 +1,11 @@
 <template>
   <article class="story-details">
-    <article class="story-details-header">
-      <h1>{{ story.title }}</h1>
-      <article class="story-details-header-likes">
-        <i class="fas fa-heart"></i>
-        <p class="story-details-header-likes-count">{{ story.likes }}</p>
-      </article>
-      <p class="story-details-header-initiator">
-        Initiator: {{ initiatorDisplayName || "No username provided" }}
-      </p>
-    </article>
+   
+    <Header :story="story" :initiatorDisplayName="initiatorDisplayName" />
 
-    <article class="story-details-content">
-      <article class="story-details-content-image">
-        <img :src="story.image" alt="" />
-      </article>
-
-      <article
-        v-html="story.content"
-        class="story-details-content-text"
-      ></article>
-
-      <StoryDetailsContributors :contributors="contributors" />
-    </article>
-
-    <StoryCTA
+    <Content :story="story" :contributors="contributors" />
+    
+    <CTA
       :isInitiator="isInitiator"
       :isLiked="isLiked"
       @onLike="onLike"
@@ -32,7 +13,7 @@
       @handleInitiatorDelete="handleInitiatorDelete"
     />
 
-    <StoryDetailsProposals
+    <Proposals
       :story="story"
       @mergeProposal="updateData"
       @handleDeleteProposal="updateData"
@@ -46,24 +27,26 @@ import {
   deleteStory,
   likeStory,
   unlikeStory,
-} from "../../services/story";
+} from "../../../services/story";
 
 import {
   deleteStoryFromUser,
   addLikedStoryToUser,
   removeLikedStoryFromUser,
   getUserData,
-} from "../../services/user";
+} from "../../../services/user";
 
-import StoryDetailsProposals from "./StoryDetailsProposals";
-import StoryDetailsContributors from "./StoryDetailsContributors.vue";
-import StoryCTA from "./StoryCTA.vue";
+import Header from "./Header";
+import Content from "./Content.vue";
+import Proposals from "./Proposals";
+import CTA from "./CTA.vue";
 
 export default {
   components: {
-    StoryDetailsProposals,
-    StoryDetailsContributors,
-    StoryCTA,
+    Header,
+    Content,
+    Proposals,
+    CTA,
   },
   data() {
     return {

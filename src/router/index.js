@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 import About from '../components/Core/About.vue';
 import StoriesWrapper from '../components/Stories/StoriesWrapper.vue';
 import Stories from '../components/Stories/Stories.vue';
-import StoryDetails from '../components/Stories/StoryDetails.vue';
+import StoryDetails from '../components/Stories/StoryDetails/StoryDetails.vue';
 import StoryCreate from '../components/Stories/StoryCreate.vue';
 import StoryEdit from '../components/Stories/StoryEdit.vue';
 import StoryAddProposal from '../components/Stories/StoryAddProposal.vue';
