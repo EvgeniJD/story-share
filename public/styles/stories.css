@@ -1,0 +1,71 @@
+.stories {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    overflow: auto;
+}
+
+.stories h1 {
+    color: white;
+    flex-basis: 100%;
+    text-align: center;
+    color: rgb(138 104 60);
+    font-size: 40px;
+    display: inline;
+    border-bottom: 1px solid rgb(91 138 118);
+    margin: 5px 0 20px 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.stories-story {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: rgb(132 132 132);
+    display: flex;
+    flex-flow: column;
+    width: 200px;
+    margin: 15px;
+    text-decoration: none;
+}
+
+.stories-story-info {
+    display: flex;
+    flex-wrap: wrap;
+    width: 200px;
+    justify-content: center;
+    padding: 12px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.stories-story-info-heading {
+    display: flex;
+    flex-direction: column;
+}
+
+.stories-story-info-heading h3 {
+    margin: 0;
+    text-align: center;
+}
+
+.stories-story-info-author {
+    margin: 3px 0 20px 0;
+}
+
+.stories-story-footer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.stories-story-footer p {
+    margin: 0;
+}
+
+.stories-story-footer-likes-wrapper {
+    display: flex;
+}
+
+.stories-story-footer-likes-wrapper i {
+    color: rgb(138 104 60);
+}

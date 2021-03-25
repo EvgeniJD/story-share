@@ -1,0 +1,77 @@
+.header {
+    display: flex;
+    background: rgba(41, 41, 41, 0.8);
+    background-blend-mode: exclusion;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-logo {
+    margin: 2px;
+}
+
+.hover:hover {
+    box-shadow: 0px 8px 10px 0px rgb(91 138 118);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.header-logo p {
+    padding: 10px 70px 10px 20px;
+    font-family: 'Sacramento', cursive;
+    font-size: 39px;
+    font-style: italic;
+    color: rgb(138 104 60);
+    font-weight: bold;
+    letter-spacing: -1px;
+    border: 1px solid rgb(91 138 118);
+    border-right-width: 5px;
+    border-top-right-radius: 10px;
+    margin: 0;
+    position: relative;
+}
+
+.header-logo p i {
+    color: rgb(91 138 118);
+}
+
+.header-logo p span {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: rgb(132 132 132);
+    position: absolute;
+    top: 55px;
+    left: 95px;
+}
+
+.header-profile {
+    color: rgb(132 132 132);
+    font-style: italic;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+}
+
+.header-profile img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.header-list {
+    display: flex;
+}
+
+.header-list li {
+    list-style: none;
+    padding: 0 30px;
+}
+
+.header-list li a {
+    text-decoration: none;
+    color: rgb(138 104 60);
+    font-weight: bold;
+    font-style: italic;
+    padding: 3px;
+}

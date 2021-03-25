@@ -1,0 +1,180 @@
+.profile {
+    margin: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    height: 500px;
+    position: relative;
+}
+
+.profile-img-name {
+    width: 235px;
+}
+
+.profile-img-name img {
+    width: 100%;
+    border-radius: 30%;
+}
+
+.profile-img-name h4 {
+    color: rgb(91 138 118);
+    margin: 0;
+    font-size: 26px;
+    text-align: center;
+}
+
+.profile-img-name p {
+    color: rgb(132 132 132);
+    text-align: center;
+    margin: 0;
+}
+
+.profile-img-name-inputs {
+    color: rgb(132 132 132);
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    left: 10px;
+    text-align: center;
+    width: 180px;
+}
+
+.profile-img-name-inputs form, .profile-img-name-inputs form label {
+    display: flex;
+    flex-direction: column;
+}
+
+.image-username-cancel-btn {
+    position: absolute;
+    bottom: 75px;
+    left: 20px;
+    width: 180px;
+}
+
+.image-username-add-btn {
+    position: absolute;
+    bottom: 30px;
+    left: 10px;
+    width: 180px;
+}
+
+.err-mini {
+    font-size: 12px;
+    padding: 0 0 10px 0;
+}
+
+.profile-img-name-inputs form label {
+    margin-bottom: 10px;
+}
+
+.profile-inspirations {
+    flex-basis: 29%;
+    margin-left: 50px;
+}
+
+.profile-inspirations-input-wrapper {
+    height: 300px;
+}
+
+.profile-inspirations-input {
+    color: rgb(132 132 132);
+    font-weight: bold;
+}
+
+.profile-inspirations-input input {
+    height: 30px;
+    width: 80%;
+}
+
+.profile-inspirations-add-btn {
+    width: 80%;
+}
+
+.profile-data-heading {
+    display: flex;
+    align-items: center;
+}
+
+.profile-data-heading h2 {
+    color: rgb(132 132 132);
+}
+
+.profile-data-heading button {
+    margin-left: 10px;
+    font-size: 22px;
+    font-weight: bolder;
+}
+
+.carousel-image {
+    object-fit: cover;
+    height: 100%;
+}
+
+.profile-stories {
+    flex-basis: 30%;
+    margin-left: 50px;
+}
+
+.profile-stories h2 {
+    color: rgb(132 132 132);
+}
+
+.profile-stories ul {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.my-story-item {
+    display: flex;
+    flex-flow: column;
+    width: 100px;
+}
+
+.my-story-item h5 {
+    color: rgb(132 132 132);
+    margin: 0;
+}
+
+.profile-proposals {
+    flex-basis: 30%;
+    height: 100%;
+}
+
+.profile-proposals h2 {
+    color: rgb(132 132 132);
+}
+
+.profile-proposals ul {
+    margin-left: 20px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    overflow: auto;
+}
+
+.profile-proposals ul li {
+    padding: 10px 0;
+    display: flex;
+    
+}
+
+.profile-proposals ul li a {
+    text-decoration: none;
+    color: rgb(132 132 132);
+    font-weight: bold;
+}
+
+.profile-proposals-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.profile-proposals-item img {
+    width: 50px;
+}
+
+.profile-proposals-item p {
+    margin-left: 10px;
+}

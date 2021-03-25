@@ -15,7 +15,7 @@
       @addInspiration="addInspiration"
     />
 
-    <Proposals v-if="userData" :myProposals="userData.proposals" />
+    <Proposals v-if="userData" :myProposals="myProposals" />
   </section>
 </template>
 
@@ -124,48 +124,33 @@ export default {
       //     id: 1,
       //   },
       // ],
-      // myProposals: [
-      //   {
-      //     storyTitle: "Three little pigs",
-      //     storyImage:
-      //       "https://assets-2.placeit.net/smart_templates/e639b9513adc63d37ee4f577433b787b/assets/wn5u193mcjesm2ycxacaltq8jdu68kmu.jpg",
-      //   },
-      //   {
-      //     storyTitle: "Three little pigs",
-      //     storyImage:
-      //       "https://assets-2.placeit.net/smart_templates/e639b9513adc63d37ee4f577433b787b/assets/wn5u193mcjesm2ycxacaltq8jdu68kmu.jpg",
-      //   },
-      //   {
-      //     storyTitle: "Three little pigs",
-      //     storyImage:
-      //       "https://assets-2.placeit.net/smart_templates/e639b9513adc63d37ee4f577433b787b/assets/wn5u193mcjesm2ycxacaltq8jdu68kmu.jpg",
-      //   },
-      //   {
-      //     storyTitle: "Three little pigs",
-      //     storyImage:
-      //       "https://assets-2.placeit.net/smart_templates/e639b9513adc63d37ee4f577433b787b/assets/wn5u193mcjesm2ycxacaltq8jdu68kmu.jpg",
-      //   },
-      //   {
-      //     storyTitle: "Three little pigs",
-      //     storyImage:
-      //       "https://assets-2.placeit.net/smart_templates/e639b9513adc63d37ee4f577433b787b/assets/wn5u193mcjesm2ycxacaltq8jdu68kmu.jpg",
-      //   },
-      //   {
-      //     storyTitle: "Three little pigs",
-      //     storyImage:
-      //       "https://assets-2.placeit.net/smart_templates/e639b9513adc63d37ee4f577433b787b/assets/wn5u193mcjesm2ycxacaltq8jdu68kmu.jpg",
-      //   },
-      //   {
-      //     storyTitle: "Three little pigs",
-      //     storyImage:
-      //       "https://assets-2.placeit.net/smart_templates/e639b9513adc63d37ee4f577433b787b/assets/wn5u193mcjesm2ycxacaltq8jdu68kmu.jpg",
-      //   },
-      //   {
-      //     storyTitle: "Three little pigs",
-      //     storyImage:
-      //       "https://assets-2.placeit.net/smart_templates/e639b9513adc63d37ee4f577433b787b/assets/wn5u193mcjesm2ycxacaltq8jdu68kmu.jpg",
-      //   },
-      // ],
+      myProposals: [
+        {
+          storyTitle: "Three little pigs",
+          storyImage:
+            "https://assets.americanliterature.com/al/images/story/three-little-pigs.jpg",
+        },
+        {
+          storyTitle: "Maria`s Story",
+          storyImage:
+            "https://mrandmrshalal.com/wp-content/uploads/2018/07/beautiful-places-in-the-world-to-visit-for-muslims-featured-700x438.jpg",
+        },
+        {
+          storyTitle: "The Ant And The Grasshopper",
+          storyImage:
+            "https://assets.americanliterature.com/al/images/story/aesops-fables/the-ants-and-the-grasshopper.jpg",
+        },
+        {
+          storyTitle: "Nineteen Eighty-Four 1984",
+          storyImage:
+            "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1532714506l/40961427._SX318_.jpg",
+        },
+        {
+          storyTitle: "Borrowed Magic",
+          storyImage:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKHykzmizSB_uyjV5_P9B6FB0lLmuJpCktIQ&usqp=CAU",
+        },
+      ],
     };
   },
   methods: {

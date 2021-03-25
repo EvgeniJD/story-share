@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import { loginUser } from "../../services/user";
+import { loginUser, getUserData } from "../../services/user";
 import {
   required,
   email,
@@ -106,6 +106,8 @@ export default {
         const currUser = { ...res.user.providerData[0], uid: res.user.uid };
         this.$store.commit("setUser", currUser);
         this.$router.push({ name: "Stories" });
+        const userData = await getUserData(res.user.uid);
+        this.$store.commit("setUserData", userData);
       } catch (e) {
         console.log(e);
         alert(e.message);

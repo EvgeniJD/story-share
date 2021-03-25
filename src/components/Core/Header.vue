@@ -53,6 +53,8 @@ export default {
         try {
           await logoutUser();
           this.$store.commit("setUser", null);
+          this.$store.commit("setUserData", null);
+          this.$store.commit("setCurrStory", null);
           this.$router.push({ name: "Login" });
         } catch (e) {
           console.log(e);

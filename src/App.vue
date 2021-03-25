@@ -1,12 +1,6 @@
 <template>
   <div id="app">
     <Header />
-    <!-- <Register v-if="chosenMethod == 'Register'" @switchMethod="switchMethod" />
-    <Login v-else @switchMethod="switchMethod" /> -->
-
-    <!-- <Stories/> -->
-
-    <!-- <StoryDetails /> -->
 
     <router-view></router-view>
 
@@ -42,5 +36,5 @@ export default {
 </script>
 
 <style>
-@import "./assets/styles.css";
+@import "../public/styles/index.css";
 </style>

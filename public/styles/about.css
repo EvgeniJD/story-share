@@ -1,0 +1,29 @@
+.about {
+    background: rgba(41, 41, 41, 0.8);
+    margin: 80px auto;
+    text-align: center;
+    color: rgb(132 132 132);
+    width: 80%;
+    border: 2px solid rgb(91 138 118);
+    border-right: 10px solid rgb(91 138 118);
+    border-top-right-radius: 20px;
+    padding: 50px;
+}
+
+.about-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    font-size: 50px;
+}
+
+.about-heading h1 {
+    font-family: 'Sacramento', cursive;
+    color: rgb(138 104 60);
+    margin: 0;
+}
+
+.about-heading i {
+    margin-left: 10px;
+    color: rgb(91 138 118);
+}

@@ -1,0 +1,81 @@
+.login {
+    margin: 8rem auto;
+    border: 1px solid rgb(91 138 118);
+    border-top-right-radius: 12px;
+    border-right-width: 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 30px;
+    position: relative;
+}
+
+.login h1 {
+    position: absolute;
+    top: -44px;
+    left: 0;
+    color: rgb(138 104 60);
+    font-style: italic;
+    font-weight: 100;
+}
+
+.login form {
+    align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+}
+
+.login form label {
+    color: rgb(132 132 132);
+    font-weight: bold;
+    margin: 10px;
+}
+
+.login form label input {
+    background: rgba(255, 255, 255, 0.5);
+    height: 30px;
+    font-size: 18px;
+}
+
+.login form button {
+    margin: 10px 10px 0 0;
+    background: rgba(255, 140, 0, 0.5);
+    padding: 6px 24px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.login-question {
+    color: rgb(132 132 132);
+    font-style: italic;
+    font-size: 13px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 2px;
+}
+
+.login-question a {
+    color: rgba(255, 140, 0, 0.5);
+    font-weight: bold;
+}
+
+.error {
+    border: 2px solid red;
+}
+
+.err-msg-wrapper {
+    align-self: center;
+    color: rgb(255, 2, 2);
+    display: flex;
+    align-items: baseline;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.err-msg-wrapper i {
+    color: rgb(255, 140, 0);
+    margin-right: 10px;
+}
+
+.err-msg {
+    margin: 5px;
+}

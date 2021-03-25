@@ -16,7 +16,7 @@
       <VueEditor v-model="content" />
       <article class="editor-image">
         <img :src="image" alt="" v-if="image" />
-        <el-button type="success" id="create-btn" @click="createStorie" :disabled="this.$v.$invalid">Create</el-button>
+        <el-button type="success" id="create-btn" @click="createStory" :disabled="this.$v.$invalid">Create</el-button>
       </article>
     </article>
   </section>
@@ -27,7 +27,7 @@ import { VueEditor } from "vue2-editor";
 import { required, minLength, url } from "vuelidate/lib/validators";
 import { isAlphaNum } from '../../customValidators/storyTitle';
 import { saveStory } from "../../services/story";
-import { addStoryToUser } from "../../services/user";
+import { addStoryToUser, getUserData } from "../../services/user";
 
 export default {
   components: {
@@ -56,7 +56,7 @@ export default {
     },
   },
   methods: {
-    async createStorie() {
+    async createStory() {
       const currUser = this.$store.getters.getUser;
 
       const story = {
@@ -82,6 +82,8 @@ export default {
         };
 
         await addStoryToUser(currUser.uid, storyInfo);
+        const userData = await getUserData(currUser.uid);
+        this.$store.commit('setUserData', userData);
 
         this.$router.push({name: 'Stories'});
       } catch (e) {

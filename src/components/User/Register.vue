@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import { registerUser, setUserToDB } from "../../services/user";
+import { registerUser, setUserToDB, getUserData } from "../../services/user";
 
 import {
   required,
@@ -142,6 +142,8 @@ export default {
         };
 
         await setUserToDB(newUserToDB);
+        const userData = await getUserData(uid);
+        this.$store.commit("setUserData", userData);
 
         this.$router.push({ name: "Stories" });
         
