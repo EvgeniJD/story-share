@@ -2,17 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import About from '../components/Core/About.vue';
-import StoriesWrapper from '../components/Stories/StoriesWrapper.vue';
-import Stories from '../components/Stories/Stories.vue';
-import StoryDetails from '../components/Stories/StoryDetails/StoryDetails.vue';
-import StoryCreate from '../components/Stories/StoryCreate.vue';
-import StoryEdit from '../components/Stories/StoryEdit.vue';
-import StoryAddProposal from '../components/Stories/StoryAddProposal.vue';
-import User from '../components/User/User.vue';
-import Login from '../components/User/Login.vue';
-import Register from '../components/User/Register.vue';
-import Profile from '../components/User/Profile/Profile.vue';
 import NotFound from '../components/Core/NotFound.vue';
+import storyRoutes from './story';
+import userRoutes from './user';
 
 import { getCurrentAuthUser } from '../services/user';
 
@@ -30,60 +22,8 @@ const routes = [
         name: 'About',
         component: About
     },
-    {
-        path: '/stories',
-        name: 'Stories',
-        component: StoriesWrapper,
-        redirect: '/stories/all',
-        children: [
-            {
-                path: '/stories/all',
-                component: Stories,
-            },
-            {
-                path: '/stories/create',
-                name: 'StoryCreate',
-                component: StoryCreate
-            },
-            {
-                path: '/stories/:id',
-                name: 'StoryDetails',
-                component: StoryDetails,
-            },
-            {
-                path: '/stories/edit/:id',
-                name: 'StoryEdit',
-                component: StoryEdit
-            },
-            {
-                path: '/stories/add-proposal/:id',
-                name: 'StoryAddProposal',
-                component: StoryAddProposal
-            },
-        ]
-    },
-    {
-        path: '/user',
-        component: User,
-        redirect: '/user/login',
-        children: [
-            {
-                path: 'login',
-                name: 'Login',
-                component: Login
-            },
-            {
-                path: 'register',
-                name: 'Register',
-                component: Register
-            },
-            {
-                path: 'profile/:id',
-                name: 'Profile',
-                component: Profile
-            }
-        ]
-    },
+    ...storyRoutes,
+    ...userRoutes,
     {
         path: '*',
         name: 'NotFound',

@@ -1,11 +1,13 @@
 <template>
   <header class="header">
-    <router-link to="/about" tag="article" class="header-logo hover">
+    <router-link to="/about" custom v-slot="{ navigate }" >
+    <article class="header-logo hover" @click="navigate" @keypress.enter="navigate" role="link">
       <p>
         Story Share
         <i class="fas fa-feather-alt"></i>
         <span>Let's make incredible stories together</span>
       </p>
+    </article>
     </router-link>
     <router-link
       :to="`/user/profile/${user.uid}`"
