@@ -105,12 +105,25 @@ export default {
         );
         const currUser = { ...res.user.providerData[0], uid: res.user.uid };
         this.$store.commit("setUser", currUser);
-        this.$router.push({ name: "Stories" });
         const userData = await getUserData(res.user.uid);
         this.$store.commit("setUserData", userData);
+
+        this.$notify({
+          group: "auth",
+          title: "Login",
+          text: "Successfully Logged In",
+          type: "success",
+        });
+
+        this.$router.push({ name: "Stories" });
       } catch (e) {
         console.log(e);
-        alert(e.message);
+        this.$notify({
+          group: "auth",
+          title: "Error",
+          text: "Wrong email or password",
+          type: "error",
+        });
       }
     },
   },

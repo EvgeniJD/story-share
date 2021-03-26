@@ -31,7 +31,12 @@ export default {
       })
       .catch((e) => {
         console.log(e);
-        alert(e.message);
+        this.$notify({
+          group: "app",
+          title: "Error",
+          text: e.message,
+          type: "error",
+        });
       });
   },
 };

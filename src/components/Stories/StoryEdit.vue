@@ -60,7 +60,12 @@ export default {
       this.content = currStory.content;
     } catch (e) {
       console.log(e);
-      alert(e.message);
+      this.$notify({
+          group: "app",
+          title: "Error",
+          text: e.message,
+          type: "error",
+        });
     }
   },
   validations: {
@@ -80,11 +85,6 @@ export default {
   },
   methods: {
     async onUpdate() {
-      const confirmResult = window.confirm(
-        "Do you really want to update this story?"
-      );
-
-      if (confirmResult) {
         const currUser = this.$store.getters.getUser;
 
         const id = this.$route.params.id;
@@ -114,12 +114,23 @@ export default {
             await addStoryToUser(currUser.uid, storyInfo);
           }
 
+          this.$notify({
+          group: "app",
+          text: "You successfully edited your story",
+          type: "success",
+        });
+
           this.$router.push(`/stories/${id}`);
         } catch (e) {
           console.log(e);
-          alert(e.message);
+          this.$notify({
+          group: "app",
+          title: "Error",
+          text: e.message,
+          type: "error",
+        });
         }
-      }
+      
     },
   },
 };

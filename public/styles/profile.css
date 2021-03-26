@@ -159,8 +159,7 @@
     
 }
 
-.profile-proposals ul li a {
-    text-decoration: none;
+.profile-proposals ul li {
     color: rgb(132 132 132);
     font-weight: bold;
 }

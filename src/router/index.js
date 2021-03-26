@@ -22,6 +22,7 @@ Vue.use(VueRouter)
 const routes = [
     {
         path: '/',
+        name: 'Home',
         redirect: '/about',
     },
     {
@@ -106,7 +107,7 @@ router.beforeEach((to, from, next) => {
     ) {
         next({ name: 'Login' });
     } else if (currUser && (to.name == 'Login' || to.name == "Register")) {
-        next({name: 'NotFound'});
+        next({name: 'Home'});
     }
     else {
         next()

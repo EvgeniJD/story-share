@@ -47,24 +47,30 @@ import { logoutUser } from "../../services/user";
 export default {
   methods: {
     async logout() {
-      const confirmResult = window.confirm("Do you really want to leave?");
+      try {
+        await logoutUser();
+        this.$store.commit("setUser", null);
+        this.$store.commit("setUserData", null);
+        this.$store.commit("setCurrStory", null);
 
-      if (confirmResult) {
-        try {
-          await logoutUser();
-          this.$store.commit("setUser", null);
-          this.$store.commit("setUserData", null);
-          this.$store.commit("setCurrStory", null);
-          this.$router.push({ name: "Login" });
-        } catch (e) {
-          console.log(e);
-          alert(e.message);
-        }
-      } else {
-        return;
+        this.$notify({
+          group: "auth",
+          title: "Logout",
+          text: `You are successfully logged out!`,
+          type: "success",
+        });
+
+        this.$router.push({ name: "Login" });
+      } catch (e) {
+        console.log(e);
+        this.$notify({
+          group: "app",
+          title: "Error",
+          text: e.message,
+          type: "error",
+        });
       }
     },
-    
   },
   computed: {
     user() {

@@ -145,11 +145,23 @@ export default {
         const userData = await getUserData(uid);
         this.$store.commit("setUserData", userData);
 
+        this.$notify({
+          group: "auth",
+          title: "Register",
+          text: `You are successfully registered!`,
+          type: "success",
+        });
+
         this.$router.push({ name: "Stories" });
         
       } catch (e) {
         console.log('REGISTER ERROR: ', e);
-        alert(`REGISTER ERROR: ${e.message}`);
+        this.$notify({
+          group: "auth",
+          title: "Error",
+          text: e.message,
+          type: "error",
+        });
       }
     },
   },

@@ -85,10 +85,21 @@ export default {
         const userData = await getUserData(currUser.uid);
         this.$store.commit('setUserData', userData);
 
+        this.$notify({
+          group: "app",
+          text: "You successfully created a story",
+          type: "success",
+        });
+
         this.$router.push({name: 'Stories'});
       } catch (e) {
         console.log(e);
-        alert(e.message);
+        this.$notify({
+          group: "app",
+          title: "Error",
+          text: e.message,
+          type: "error",
+        });
       }
     },
   },

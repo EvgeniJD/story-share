@@ -72,8 +72,13 @@
 </template>
 
 <script>
-import { updateStory, removeProposalFromStory, addContributer, getStory } from "../../../services/story";
-import { removeProposalFromUser, getUserData } from '../../../services/user';
+import {
+  updateStory,
+  removeProposalFromStory,
+  addContributer,
+  getStory,
+} from "../../../services/story";
+import { removeProposalFromUser, getUserData } from "../../../services/user";
 
 export default {
   props: {
@@ -89,10 +94,10 @@ export default {
     };
   },
   computed: {
-      isInitiator() {
-          const user = this.$store.getters.getUser;
-          return user.uid === this.story.initiator.uid;
-      },
+    isInitiator() {
+      const user = this.$store.getters.getUser;
+      return user.uid === this.story.initiator.uid;
+    },
   },
   methods: {
     handleEdit(index, row) {
@@ -113,13 +118,25 @@ export default {
         await updateStory(storyID, dataToUpdate);
         await removeProposalFromStory(storyID, proposal);
         await removeProposalFromUser(user.uid, proposal);
-        await addContributer(storyID, proposal.authorEmail)
+        await addContributer(storyID, proposal.authorEmail);
         const updatedStory = await getStory(storyID);
         const udpadedUserData = await getUserData(user.uid);
-        this.$emit('mergeProposal', updatedStory, udpadedUserData);
+
+        this.$notify({
+          group: "app",
+          text: "Proposal successfully merged",
+          type: "success",
+        });
+
+        this.$emit("mergeProposal", updatedStory, udpadedUserData);
       } catch (e) {
         console.log(e);
-        alert(e.message);
+        this.$notify({
+          group: "app",
+          title: "Error",
+          text: e.message,
+          type: "error",
+        });
       }
     },
     async handleDeleteProposal(row) {
@@ -131,11 +148,23 @@ export default {
         await removeProposalFromStory(storyID, proposal);
         await removeProposalFromUser(user.uid, proposal);
         const updatedStory = await getStory(storyID);
-        const udpadedUserData = await getUserData(user.uid);
-        this.$emit('handleDeleteProposal', updatedStory, udpadedUserData);
+        const updatedUserData = await getUserData(user.uid);
+
+        this.$notify({
+          group: "app",
+          text: "Proposal deleted",
+          type: "success",
+        });
+
+        this.$emit("handleDeleteProposal", updatedStory, updatedUserData);
       } catch (e) {
         console.log(e);
-        alert(e.message);
+        this.$notify({
+          group: "app",
+          title: "Error",
+          text: e.message,
+          type: "error",
+        });
       }
     },
   },

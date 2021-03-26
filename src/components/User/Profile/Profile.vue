@@ -15,7 +15,7 @@
       @addInspiration="addInspiration"
     />
 
-    <Proposals v-if="userData" :myProposals="myProposals" />
+    <Proposals v-if="userData" :myProposals="userData.proposals" />
   </section>
 </template>
 
@@ -36,94 +36,6 @@ export default {
   },
   data() {
     return {
-      // myInspirations: [
-      //   "https://images.penguinrandomhouse.com/cover/9780553288100",
-      //   "https://images.penguinrandomhouse.com/cover/9780553299496",
-      //   "https://d3525k1ryd2155.cloudfront.net/h/263/094/1112094263.0.x.jpg",
-      //   "https://i2.wp.com/literariness.org/wp-content/uploads/2018/04/85cf7828a2f454a9dc0875f28b8e005e.jpg",
-      //   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVtnRyu1LHAFt62zIi8O5_teStTT-7hyrFeA&usqp=CAU",
-      //   "https://i1.wp.com/literariness.org/wp-content/uploads/2018/04/thestarslikedust.jpg",
-      //   "https://images.penguinrandomhouse.com/cover/9780553288100",
-      //   "https://images.penguinrandomhouse.com/cover/9780553299496",
-      //   "https://d3525k1ryd2155.cloudfront.net/h/263/094/1112094263.0.x.jpg",
-      //   "https://i2.wp.com/literariness.org/wp-content/uploads/2018/04/85cf7828a2f454a9dc0875f28b8e005e.jpg",
-      //   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVtnRyu1LHAFt62zIi8O5_teStTT-7hyrFeA&usqp=CAU",
-      //   "https://i1.wp.com/literariness.org/wp-content/uploads/2018/04/thestarslikedust.jpg",
-      // ],
-      // myStories: [
-      //   {
-      //     image:
-      //       "https://assets-2.placeit.net/smart_templates/e639b9513adc63d37ee4f577433b787b/assets/wn5u193mcjesm2ycxacaltq8jdu68kmu.jpg",
-      //     title: "Beautiful story",
-      //     id: 1,
-      //   },
-      //   {
-      //     image:
-      //       "https://assets-2.placeit.net/smart_templates/e639b9513adc63d37ee4f577433b787b/assets/wn5u193mcjesm2ycxacaltq8jdu68kmu.jpg",
-      //     title: "Beautiful story",
-      //     id: 1,
-      //   },
-      //   {
-      //     image:
-      //       "https://assets-2.placeit.net/smart_templates/e639b9513adc63d37ee4f577433b787b/assets/wn5u193mcjesm2ycxacaltq8jdu68kmu.jpg",
-      //     title: "Beautiful story",
-      //     id: 1,
-      //   },
-      //   {
-      //     image:
-      //       "https://c1.staticsfly.com/asset/fetch/prec_you-can-be-anything-storybook_preview-01/style.preview/v2",
-      //     title: "Beautiful story",
-      //     id: 1,
-      //   },
-      //   {
-      //     image:
-      //       "https://c1.staticsfly.com/asset/fetch/prec_you-can-be-anything-storybook_preview-01/style.preview/v2",
-      //     title: "Beautiful story",
-      //     id: 1,
-      //   },
-      //   {
-      //     image:
-      //       "https://c1.staticsfly.com/asset/fetch/prec_you-can-be-anything-storybook_preview-01/style.preview/v2",
-      //     title: "Beautiful story",
-      //     id: 1,
-      //   },
-      //   {
-      //     image:
-      //       "https://c1.staticsfly.com/asset/fetch/prec_you-can-be-anything-storybook_preview-01/style.preview/v2",
-      //     title: "Beautiful story",
-      //     id: 1,
-      //   },
-      //   {
-      //     image:
-      //       "https://c1.staticsfly.com/asset/fetch/prec_you-can-be-anything-storybook_preview-01/style.preview/v2",
-      //     title: "Beautiful story",
-      //     id: 1,
-      //   },
-      //   {
-      //     image:
-      //       "https://c1.staticsfly.com/asset/fetch/prec_you-can-be-anything-storybook_preview-01/style.preview/v2",
-      //     title: "Beautiful story",
-      //     id: 1,
-      //   },
-      //   {
-      //     image:
-      //       "https://c1.staticsfly.com/asset/fetch/prec_you-can-be-anything-storybook_preview-01/style.preview/v2",
-      //     title: "Beautiful story",
-      //     id: 1,
-      //   },
-      //   {
-      //     image:
-      //       "https://c1.staticsfly.com/asset/fetch/prec_you-can-be-anything-storybook_preview-01/style.preview/v2",
-      //     title: "Beautiful story",
-      //     id: 1,
-      //   },
-      //   {
-      //     image:
-      //       "https://c1.staticsfly.com/asset/fetch/prec_you-can-be-anything-storybook_preview-01/style.preview/v2",
-      //     title: "Beautiful story",
-      //     id: 1,
-      //   },
-      // ],
       myProposals: [
         {
           storyTitle: "Three little pigs",
@@ -159,27 +71,52 @@ export default {
         await updateUserInfo(username, imageURL);
         const user = getCurrentAuthUser();
         const currUser = { ...user.providerData[0], uid: user.uid };
+
+        this.$notify({
+          group: "app",
+          text: "User updated",
+          type: "success",
+        });
+
         this.$store.commit("setUser", currUser);
       } catch (e) {
         console.log(e);
-        alert(e.message);
+        this.$notify({
+          group: "app",
+          title: "Error",
+          text: e.message,
+          type: "error",
+        });
       }
     },
     async addInspiration(userID, inspirationURL) {
       try {
         await addInspirationToUser(userID, inspirationURL);
         const userData = await getUserData(userID);
+
+        this.$notify({
+          group: "app",
+          text: "Inspiration added successfully",
+          type: "success",
+        });
+
         this.$store.commit("setUserData", userData);
       } catch (e) {
         console.log(e);
-        alert(e.message);
+        this.$notify({
+          group: "app",
+          title: "Error",
+          text: e.message,
+          type: "error",
+        });
       }
     },
   },
-
   computed: {
     userData() {
-      return this.$store.getters.getUserData;
+      const userData = this.$store.getters.getUserData;
+      console.log('USER DATA FROM PROFILE COMPUTED: ', userData);
+      return userData;
     },
     user() {
       return this.$store.getters.getUser;

@@ -22,7 +22,7 @@
 <script>
 import { VueEditor } from "vue2-editor";
 import { required, minLength } from "vuelidate/lib/validators";
-import { addProposalToStory } from '../../services/story';
+import { addProposalToStory, getStory } from '../../services/story';
 import { addProposalToUser } from '../../services/user';
 
 export default {
@@ -48,27 +48,56 @@ export default {
       const authorID = user.uid;
       const authorEmail = user.email;
 
+      const storyID = this.$route.params.id;
+
       const proposal = {
         authorID,
         authorEmail,
         content: `\n ( ${user.email} ) Beginning: \n ${this.content} \n ( ${user.email} ) End`,
         likes: 0,
+        storyImage: this.image,
+        storyTitle: this.title
       }
-
-      const storyID = this.$route.params.id;
 
       try {
         await addProposalToStory(storyID, proposal);
         await addProposalToUser(authorID, proposal);
+
+        this.$notify({
+          group: "app",
+          text: "You successfully added a proposal",
+          type: "success",
+        });
+
         this.$router.push(`/stories/${storyID}`);
       } catch (e) {
         console.log(e);
-        alert(e.message);
+        this.$notify({
+          group: "app",
+          title: "Error",
+          text: e.message,
+          type: "error",
+        });
       }
     },
   },
-  created() {
-    const story = this.$store.getters.getCurrStory;
+  async created() {
+    const storyID = this.$route.params.id;
+    let story = this.$store.getters.getCurrStory;
+    if(!story) {
+      try {
+        const res = await getStory(storyID);
+        story = res.data();
+      } catch (e) {
+        console.log(e);
+        this.$notify({
+          group: "app",
+          title: "Error",
+          text: e.message,
+          type: "error",
+        });
+      }
+    }
 
     this.title = story.title;
     this.image = story.image;

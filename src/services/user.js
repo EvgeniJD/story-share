@@ -14,7 +14,12 @@ export async function logoutUser() {
         .signOut()
         .catch((e) => {
             console.log(e);
-            alert(e.message);
+            this.$notify({
+          group: "app",
+          title: "Error",
+          text: e.message,
+          type: "error",
+        });
         });
 }
 
@@ -28,7 +33,12 @@ export async function updateUserInfo(username, imageURL) {
         console.log('Update user successful.', res);
     }).catch(function (e) {
         console.log(e);
-        alert(e.message);
+        this.$notify({
+          group: "app",
+          title: "Error",
+          text: e.message,
+          type: "error",
+        });
     });
 }
 
@@ -47,7 +57,12 @@ export async function setUserToDB(user) {
         })
         .catch((e) => {
             console.log("Oops: ", e);
-            alert(e.message);
+            this.$notify({
+          group: "app",
+          title: "Error",
+          text: e.message,
+          type: "error",
+        });
         });
 }
 
@@ -59,7 +74,12 @@ export async function getUserData(userID) {
    })
    .catch((e) => {
        console.log(e);
-       alert(e.message);
+       this.$notify({
+          group: "app",
+          title: "Error",
+          text: e.message,
+          type: "error",
+        });
    })
 }
 

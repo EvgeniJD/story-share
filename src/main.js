@@ -4,6 +4,7 @@ import Vuelidate from 'vuelidate'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/en'
+import Notifications from 'vue-notification'
 import router from './router';
 import {auth} from './firebase';
 import Vue2Editor from "vue2-editor";
@@ -15,12 +16,9 @@ Vue.use(Vuelidate)
 
 Vue.use(ElementUI, { locale })
 
-Vue.config.productionTip = false
+Vue.use(Notifications)
 
-// new Vue({
-//   render: h => h(App),
-//   router
-// }).$mount('#app')
+Vue.config.productionTip = false
 
 let app
 auth.onAuthStateChanged(() => {
