@@ -20,6 +20,7 @@ Vue.use(Notifications)
 
 Vue.config.productionTip = false
 
+//  This ensures Firebase initializes before loading the app when a user refreshes a page.
 let app
 auth.onAuthStateChanged(() => {
   if (!app) {

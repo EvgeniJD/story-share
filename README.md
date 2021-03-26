@@ -13,6 +13,8 @@ Authentication: email, password.
     *create their own stories; 
     *edit or delete them;
     *merge other user`s proposal or delete it; 
+
+Hosting: https://story-share-4e313.web.app/
   
 ```
 
