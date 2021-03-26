@@ -1,7 +1,6 @@
 import User from '../components/User/User.vue';
 import Login from '../components/User/Login.vue';
 import Register from '../components/User/Register.vue';
-import Profile from '../components/User/Profile/Profile.vue';
 
 const userRoutes = [
     {
@@ -22,7 +21,7 @@ const userRoutes = [
             {
                 path: 'profile/:id',
                 name: 'Profile',
-                component: Profile
+                component: () => import(/* webpackChunkName: "Profile" */ '../components/User/Profile/Profile.vue')
             }
         ]
     },

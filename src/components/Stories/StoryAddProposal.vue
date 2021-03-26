@@ -53,7 +53,7 @@ export default {
       const proposal = {
         authorID,
         authorEmail,
-        content: `\n ( ${user.email} ) Beginning: \n ${this.content} \n ( ${user.email} ) End`,
+        content: `\n ( ${user.email} ) Beginning: \n ${this.content} \n ( ${user.email} ) End \n`,
         likes: 0,
         storyImage: this.image,
         storyTitle: this.title

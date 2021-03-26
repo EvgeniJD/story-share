@@ -3,7 +3,7 @@
     <Header />
 
     <notifications group="auth" position="top left" />
-    <notifications group="app" position="top left" />
+    <notifications group="app" position="top center" />
 
     <router-view></router-view>
 

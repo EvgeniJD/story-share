@@ -1,9 +1,5 @@
 import StoriesWrapper from '../components/Stories/StoriesWrapper.vue';
 import Stories from '../components/Stories/Stories.vue';
-import StoryCreate from '../components/Stories/StoryCreate.vue';
-import StoryDetails from '../components/Stories/StoryDetails/StoryDetails.vue';
-import StoryEdit from '../components/Stories/StoryEdit.vue';
-import StoryAddProposal from '../components/Stories/StoryAddProposal.vue';
 
 const storyRoutes = [
     {
@@ -19,22 +15,23 @@ const storyRoutes = [
             {
                 path: '/stories/create',
                 name: 'StoryCreate',
-                component: StoryCreate
+                component: () => import(/* webpackChunkName: "StoryCreate" */ '../components/Stories/StoryCreate.vue')
+
             },
             {
                 path: '/stories/:id',
                 name: 'StoryDetails',
-                component: StoryDetails,
+                component: () => import(/* webpackChunkName: "StoryDetails" */ '../components/Stories/StoryDetails/StoryDetails.vue')
             },
             {
                 path: '/stories/edit/:id',
                 name: 'StoryEdit',
-                component: StoryEdit
+                component: () => import(/* webpackChunkName: "StoryEdit" */ '../components/Stories/StoryEdit.vue')
             },
             {
                 path: '/stories/add-proposal/:id',
                 name: 'StoryAddProposal',
-                component: StoryAddProposal
+                component: () => import(/* webpackChunkName: "StoryAddProposal" */ '../components/Stories/StoryAddProposal.vue')
             },
         ]
     },
